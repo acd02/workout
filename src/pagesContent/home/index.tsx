@@ -3,8 +3,7 @@ import { Button } from 'components/atoms/Button'
 import { MainLayout } from 'components/layouts/Main'
 import { Stopwatch } from 'components/organisms/Stopwatch'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
-import NoSleep from 'nosleep.js'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -14,19 +13,6 @@ import { getNextStepLabel } from './utils'
 
 export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
-
-  useEffect(() => {
-    document.addEventListener(
-      'click',
-      () => {
-        const nosleep = new NoSleep()
-        nosleep.enable()
-      },
-      {
-        once: true,
-      }
-    )
-  }, [])
 
   const initButtons = state.matches('idle') && (
     <div>
