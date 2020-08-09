@@ -2,8 +2,8 @@ import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { useEffect, useState } from 'react'
 
-import { toIntlNumberFormat } from './utils'
 import styles from './styles.module.css'
+import { toIntlNumberFormat } from './utils'
 
 type Props = {
   shouldReset?: boolean

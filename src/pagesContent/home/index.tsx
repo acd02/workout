@@ -1,9 +1,9 @@
 import { useMachine } from '@xstate/react'
+import cx from 'classcat'
 import { Button } from 'components/atoms/Button'
 import { MainLayout } from 'components/layouts/Main'
 import { Stopwatch } from 'components/organisms/Stopwatch'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
-import cx from 'classcat'
 import React from 'react'
 
 import { Footer } from './Footer'
