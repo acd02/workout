@@ -15,7 +15,7 @@ export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
 
   const initButtons = state.matches('idle') && (
-    <div>
+    <div className="self-center">
       <Button
         label="START SINGLE SIDE SET"
         color="orange"
