@@ -3,6 +3,7 @@ import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { useEffect, useState } from 'react'
 
 import { toIntlNumberFormat } from './utils'
+import styles from './styles.module.css'
 
 type Props = {
   shouldReset?: boolean
@@ -37,11 +38,15 @@ export function Stopwatch({ shouldReset, limit = 60 }: Props) {
     )
 
   const classNames =
-    'border-solid border-4 border-gray-700 rounded-full w-40 h-40 flex flex-wrap items-center nums-tabular justify-center text-6xl transition-colors duration-300'
+    'border-solid border-4 border-gray-700 rounded-full w-40 h-40 flex flex-wrap items-center justify-center text-6xl transition-colors duration-300'
 
   return (
     <div
-      className={cx([classNames, limit < elapsedTime && 'border-red-400 text-red-400'])}
+      className={cx([
+        classNames,
+        styles.elapsedTime,
+        limit < elapsedTime && 'border-red-400 text-red-400',
+      ])}
     >
       {formattedElapsedTime}
     </div>

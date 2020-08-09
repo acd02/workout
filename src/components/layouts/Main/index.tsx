@@ -21,7 +21,10 @@ export function MainLayout({
       <Meta title={title} description={description} />
       {header && (
         <div
-          className={cx(['flex-none py-8 text-center flex items-center', styles.header])}
+          className={cx([
+            'flex-none py-2 md:py-8 text-center flex items-center',
+            styles.header,
+          ])}
         >
           {header}
         </div>
@@ -29,7 +32,10 @@ export function MainLayout({
       <div className="p-4 flex-grow">{children}</div>
       {footer && (
         <div
-          className={cx(['flex-none py-8 text-center flex items-center', styles.footer])}
+          className={cx([
+            'flex-none py-2 md:py-8 text-center flex items-center',
+            styles.footer,
+          ])}
         >
           {footer}
         </div>

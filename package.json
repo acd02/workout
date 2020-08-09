@@ -75,7 +75,6 @@
     "stylelint-config-standard": "20.0.0",
     "stylelint-order": "4.1.0",
     "tailwindcss": "1.6.2",
-    "tailwindcss-typography": "3.1.0",
     "ts-jest": "26.1.4",
     "ts-node": "8.10.2",
     "typescript": "3.9.7",

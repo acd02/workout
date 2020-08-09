@@ -8,7 +8,6 @@ module.exports = {
   ],
   plugins: [
     require('@tailwindcss/ui'),
-    require('tailwindcss-typography'),
     plugin(function ({ addVariant }) {
       addVariant('important', ({ container }) => {
         container.walkRules(rule => {

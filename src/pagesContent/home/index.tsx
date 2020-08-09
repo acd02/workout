@@ -3,6 +3,7 @@ import { Button } from 'components/atoms/Button'
 import { MainLayout } from 'components/layouts/Main'
 import { Stopwatch } from 'components/organisms/Stopwatch'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
+import cx from 'classcat'
 import React from 'react'
 
 import { Footer } from './Footer'
@@ -15,7 +16,7 @@ export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
 
   const initButtons = state.matches('idle') && (
-    <div className="self-center">
+    <div>
       <Button
         label="START SINGLE SIDE SET"
         color="orange"
@@ -67,7 +68,12 @@ export function RenderHome() {
       header={!state.matches('idle') && <Header context={state.context} />}
       footer={!state.matches('idle') && <Footer context={state.context} />}
     >
-      <div className="flex flex-wrap h-full items-center justify-center">
+      <div
+        className={cx([
+          'flex flex-wrap items-center justify-center',
+          state.matches('idle') ? 'h-screen' : 'h-full',
+        ])}
+      >
         {initButtons}
         {mainContent}
         {navigationButtons}
