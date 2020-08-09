@@ -6,13 +6,6 @@ module.exports = {
     './src/pages/**/*.tsx',
     './src/pagesContent/**/*.tsx',
   ],
-  theme: {
-    extend: {},
-  },
-  variants: {
-    display: ['responsive', 'important'],
-    textColor: ['responsive', 'hover', 'focus', 'important', 'important-hover'],
-  },
   plugins: [
     require('@tailwindcss/ui'),
     require('tailwindcss-typography'),
