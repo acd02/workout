@@ -54,9 +54,7 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
       },
       initSet: {
         entry: [Actions.setMode, Actions.resetSteps],
-        on: {
-          '': [{ target: 'onGoingSet' }],
-        },
+        always: [{ target: 'onGoingSet' }],
       },
       onGoingSet: {
         entry: [Actions.incrementStep],
@@ -76,15 +74,11 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
       },
       previousFromOnGoing: {
         entry: [Actions.decrementStep],
-        on: {
-          '': [{ target: 'inBetweenSteps' }],
-        },
+        always: [{ target: 'inBetweenSteps' }],
       },
       previousFromInBetween: {
         entry: [Actions.decrementStep],
-        on: {
-          '': [{ target: 'onGoingSet' }],
-        },
+        always: [{ target: 'onGoingSet' }],
       },
     },
   },
