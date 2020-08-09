@@ -1,0 +1,11 @@
+.header {
+  @media (min-width: theme('screens.md')) {
+    min-height: 200px;
+  }
+}
+
+.footer {
+  @media (min-width: theme('screens.md')) {
+    min-height: 200px;
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "src/**/*.ts?(x)": [
+    "npm run lint:prod",
+    "npm run prettier"
+  ],
+  "src/**/*.module.css": [
+    "npm run lint:styles"
+  ]
+}
