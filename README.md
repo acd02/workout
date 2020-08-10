@@ -1,6 +1,8 @@
 # Workout helper
 
-Made with next.js
+Made with:
+- [Next.js](https://nextjs.org/)
+- [XState](https://github.com/davidkpiano/xstate)
 
 ## Usage:
 
