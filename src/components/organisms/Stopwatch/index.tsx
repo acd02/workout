@@ -2,7 +2,6 @@ import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { useEffect, useState } from 'react'
 
-import styles from './styles.module.css'
 import { toIntlNumberFormat } from './utils'
 
 type Props = {
@@ -38,16 +37,13 @@ export function Stopwatch({ shouldReset, limit = 60 }: Props) {
     )
 
   const classNames =
-    'border-solid border-4 border-gray-700 rounded-full w-40 h-40 flex flex-wrap items-center justify-center text-6xl transition-colors duration-300'
+    'tabular-nums border-solid border-4 border-gray-700 rounded-full w-40 h-40 flex flex-wrap items-center justify-center text-6xl transition-colors duration-300'
 
   return (
     <div
-      className={cx([
-        classNames,
-        styles.elapsedTime,
-        limit < elapsedTime && 'border-red-400 text-red-400',
-      ])}
+      className={cx([classNames, limit < elapsedTime && 'border-red-400 text-red-400'])}
     >
+      <p className="border"></p>
       {formattedElapsedTime}
     </div>
   )

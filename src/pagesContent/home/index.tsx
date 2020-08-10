@@ -70,8 +70,8 @@ export function RenderHome() {
     >
       <div
         className={cx([
-          'flex flex-wrap items-center justify-center',
-          state.matches('idle') ? 'h-screen' : 'h-full',
+          'flex flex-wrap items-center justify-center px-6',
+          state.matches('idle') && 'row-span-3',
         ])}
       >
         {initButtons}

@@ -17,7 +17,7 @@ export function MainLayout({
   footer,
 }: PropsWithChildren<Props>) {
   return (
-    <div className="flex flex-col h-full">
+    <div className={styles.root}>
       <Meta title={title} description={description} />
       {header && (
         <div
@@ -29,7 +29,7 @@ export function MainLayout({
           {header}
         </div>
       )}
-      <div className="p-4 flex-grow">{children}</div>
+      {children}
       {footer && (
         <div
           className={cx([

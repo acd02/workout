@@ -28,5 +28,20 @@ module.exports = {
         })
       })
     }),
+    plugin(function ({ addUtilities }) {
+      const tabularNums = {
+        '.tabular-nums': {
+          'font-variant-numeric': 'tabular-nums',
+        },
+      }
+
+      const flipX = {
+        '.flip-x': {
+          transform: 'scaleX(-1)'
+        },
+      }
+
+      addUtilities({...tabularNums, ...flipX})
+    }),
   ],
 }

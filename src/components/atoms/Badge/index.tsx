@@ -1,11 +1,12 @@
+import cx from 'classcat'
 import React from 'react'
 import { Colors } from 'theme'
 
-type Props = { label: string; color: Colors }
+type Props = { label: string; color: Colors; size?: 'xl' }
 
-export function Badge({ label, color }: Props) {
-  const commonClassNames =
-    'inline-flex items-center px-3 py-0.5 rounded-full text-lg font-medium leading-5'
+export function Badge({ label, color, size }: Props) {
+  const sizeClassNames =
+    size === 'xl' ? 'px-5 text-4xl leading-none py-2' : 'px-3 py-0.5 text-lg leading-5'
 
   const colorMapper: Record<Colors, string> = {
     gray: 'bg-gray-100 text-gray-800',
@@ -20,5 +21,15 @@ export function Badge({ label, color }: Props) {
     pink: 'bg-pink-100 text-pink-800',
   }
 
-  return <span className={`${commonClassNames} ${colorMapper[color]}`}>{label}</span>
+  return (
+    <span
+      className={cx([
+        'inline-flex items-center rounded-full font-medium',
+        sizeClassNames,
+        colorMapper[color],
+      ])}
+    >
+      {label}
+    </span>
+  )
 }
