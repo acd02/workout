@@ -9,9 +9,9 @@ export function getNextStepLabel({
 
   const isOngoingSet = matches('onGoingSet')
 
-  if (isOngoingSet) return `STEP ${context.step} COMPLETED`
+  if (isOngoingSet) return `COMPLETE STEP ${context.step}`
   else
     return context.step + 1 > limit
-      ? 'ALL SETS COMPLETED!'
-      : `READY FOR SET ${context.step + 1}!`
+      ? 'COMPLETE LAST STEP!'
+      : `START SET ${context.step + 1}!`
 }
