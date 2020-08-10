@@ -7,8 +7,6 @@ type WorkoutStateSchema = {
     initSet: {}
     onGoingSet: {}
     inBetweenSteps: {}
-    previousFromInBetween: {}
-    previousFromOnGoing: {}
   }
 }
 /* eslint-enable */
@@ -60,25 +58,24 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
         entry: [Actions.incrementStep],
         on: {
           NEXT: 'inBetweenSteps',
-          PREVIOUS: [{ target: 'previousFromOnGoing', cond: Guards.isNotFirstStep }],
+          PREVIOUS: {
+            actions: [Actions.decrementStep],
+            target: 'inBetweenSteps',
+            cond: Guards.isNotFirstStep,
+          },
         },
       },
       inBetweenSteps: {
         on: {
-          PREVIOUS: 'previousFromInBetween',
+          PREVIOUS: {
+            actions: [Actions.decrementStep],
+            target: 'onGoingSet',
+          },
           NEXT: [
             { target: 'idle', cond: Guards.hasReachedLimit },
             { target: 'onGoingSet', cond: Guards.hasNotReachedLimit },
           ],
         },
-      },
-      previousFromOnGoing: {
-        entry: [Actions.decrementStep],
-        always: [{ target: 'inBetweenSteps' }],
-      },
-      previousFromInBetween: {
-        entry: [Actions.decrementStep],
-        always: [{ target: 'onGoingSet' }],
       },
     },
   },
