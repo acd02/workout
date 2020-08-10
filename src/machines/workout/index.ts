@@ -4,7 +4,6 @@ import { assign, Machine } from 'xstate'
 type WorkoutStateSchema = {
   states: {
     idle: {}
-    initSet: {}
     onGoingSet: {}
     inBetweenSteps: {}
   }
@@ -47,12 +46,11 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
     states: {
       idle: {
         on: {
-          START_SET: 'initSet',
+          START_SET: {
+            actions: [Actions.setMode, Actions.resetSteps],
+            target: 'onGoingSet',
+          },
         },
-      },
-      initSet: {
-        entry: [Actions.setMode, Actions.resetSteps],
-        always: [{ target: 'onGoingSet' }],
       },
       onGoingSet: {
         entry: [Actions.incrementStep],
