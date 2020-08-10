@@ -13,22 +13,26 @@ type WorkoutStateSchema = {
 // The events that the machine handles
 export type WorkoutEvent =
   | { type: 'START_SET'; mode: Mode }
+  | { type: 'SET_SPEED'; speed: Speed }
   | { type: 'NEXT' }
   | { type: 'PREVIOUS' }
 
 type Mode = 'single' | 'both sides'
+type Speed = 'normal' | 'double time'
 
 // The context (extended state) of the machine
 export type WorkoutContext = {
   step: number
   mode?: Mode
+  speed?: Speed
 }
 
 enum Actions {
   incrementStep = 'incrementStep',
   decrementStep = 'decrementStep',
   setMode = 'setMode',
-  resetSteps = 'resetSteps',
+  setSpeed = 'setSpeed',
+  resetContext = 'resetContext',
 }
 
 enum Guards {
@@ -47,13 +51,13 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
       idle: {
         on: {
           START_SET: {
-            actions: [Actions.setMode, Actions.resetSteps],
+            actions: [Actions.setMode, Actions.setSpeed, Actions.resetContext],
             target: 'onGoingSet',
           },
         },
       },
       onGoingSet: {
-        entry: [Actions.incrementStep],
+        entry: [Actions.incrementStep, Actions.setSpeed],
         on: {
           NEXT: 'inBetweenSteps',
           PREVIOUS: {
@@ -79,8 +83,19 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
   },
   {
     actions: {
-      [Actions.resetSteps]: assign({
+      [Actions.resetContext]: assign<WorkoutContext, WorkoutEvent>({
         step: 0,
+        speed: 'normal',
+      }),
+      [Actions.setSpeed]: assign({
+        speed: (context, e) => {
+          const isLastStep =
+            context.mode === 'single' ? context.step >= 7 : context.step === 4
+
+          if (isLastStep) return 'double time'
+          if (e.type === 'SET_SPEED') return e.speed
+          else return context.speed
+        },
       }),
       [Actions.setMode]: assign({
         mode: (context, e) => {

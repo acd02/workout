@@ -35,7 +35,12 @@ export function RenderHome() {
   const mainContent = !state.matches('idle') && (
     <div className="mb-2">
       {state.matches('onGoingSet') && (
-        <UndrawSvg className={`${styles.heartbeat} mb-4 max-w-full`} width={500} />
+        <UndrawSvg
+          className={`${styles.heartbeat} ${
+            state.context.speed === 'double time' && styles.doubleTime
+          } mb-4 max-w-full`}
+          width={500}
+        />
       )}
       {state.matches('inBetweenSteps') && <Stopwatch />}
     </div>
