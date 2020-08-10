@@ -1,11 +1,14 @@
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  purge: [
-    './src/components/**/*.tsx',
-    './src/pages/**/*.tsx',
-    './src/pagesContent/**/*.tsx',
-  ],
+  purge: {
+    mode: 'all',
+    content: [
+      './src/components/**/*.tsx',
+      './src/pages/**/*.tsx',
+      './src/pagesContent/**/*.tsx',
+    ],
+  },
   plugins: [
     require('@tailwindcss/ui'),
     plugin(function ({ addVariant }) {
@@ -37,11 +40,11 @@ module.exports = {
 
       const flipX = {
         '.flip-x': {
-          transform: 'scaleX(-1)'
+          transform: 'scaleX(-1)',
         },
       }
 
-      addUtilities({...tabularNums, ...flipX})
+      addUtilities({ ...tabularNums, ...flipX })
     }),
   ],
 }
