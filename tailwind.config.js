@@ -1,4 +1,7 @@
 const plugin = require('tailwindcss/plugin')
+const utilities = require('./tailwind/utilities')
+const animation = require('./tailwind/animation')
+const keyframes = require('./tailwind/keyframes')
 
 module.exports = {
   purge: {
@@ -32,41 +35,13 @@ module.exports = {
       })
     }),
     plugin(function ({ addUtilities }) {
-      const tabularNums = {
-        '.tabular-nums': {
-          'font-variant-numeric': 'tabular-nums',
-        },
-      }
-
-      const flipX = {
-        '.flip-x': {
-          transform: 'scaleX(-1)',
-        },
-      }
-
-      addUtilities({ ...tabularNums, ...flipX })
+      addUtilities({ ...utilities })
     }),
   ],
   theme: {
     extend: {
-      animation: {
-        heartbeat: 'heartbeat 5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite both',
-        'heartbeat-double-time':
-          'heartbeat 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite both',
-      },
-      keyframes: {
-        heartbeat: {
-          '0%': {
-            transform: 'scale(1)',
-            'transform-origin': 'center center',
-            'animation-timing-function': 'ease-out',
-          },
-          '10%': { transform: 'scale(0.96)', 'animation-timing-function': 'ease-in' },
-          '17%': { transform: 'scale(0.98)', 'animation-timing-function': 'ease-out' },
-          '33%': { transform: 'scale(0.92)', 'animation-timing-function': 'ease-in' },
-          '45%': { transform: 'scale(1)', 'animation-timing-function': 'ease-out' },
-        },
-      },
+      animation,
+      keyframes,
     },
   },
 }
