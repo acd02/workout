@@ -14,8 +14,9 @@ import { getNextStepLabel } from './utils'
 
 export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
+  const { matches, context } = state
 
-  const initButtons = state.matches('idle') && (
+  const initButtons = matches('idle') && (
     <div>
       <Button
         label="START SINGLE SIDE SET"
@@ -32,24 +33,24 @@ export function RenderHome() {
     </div>
   )
 
-  const mainContent = !state.matches('idle') && (
+  const mainContent = !matches('idle') && (
     <div className="mb-2">
-      {state.matches('onGoingSet') && (
+      {matches('onGoingSet') && (
         <UndrawSvg
           className={`${styles.heartbeat} ${
-            state.context.speed === 'double time' && styles.doubleTime
+            context.speed === 'double time' && styles.doubleTime
           } mb-4 max-w-full`}
           width={500}
         />
       )}
-      {state.matches('inBetweenSteps') && <Stopwatch />}
+      {matches('inBetweenSteps') && <Stopwatch />}
     </div>
   )
 
-  const navigationButtons = !state.matches('idle') && (
+  const navigationButtons = !matches('idle') && (
     <div className="w-full flex flex-wrap justify-center mt-4">
       <Button
-        disabled={state.matches('onGoingSet') && state.context.step === 1}
+        disabled={matches('onGoingSet') && context.step === 1}
         className="w-full mb-8 md:w-auto md:mb-0 md:mr-8"
         innerBtnClassName="justify-center"
         label="PREVIOUS"
@@ -70,13 +71,13 @@ export function RenderHome() {
     <MainLayout
       title="workout"
       description="workout"
-      header={!state.matches('idle') && <Header context={state.context} />}
-      footer={!state.matches('idle') && <Footer context={state.context} />}
+      header={!matches('idle') && <Header context={context} />}
+      footer={!matches('idle') && <Footer context={context} />}
     >
       <div
         className={cx([
           'flex flex-wrap items-center justify-center px-6',
-          state.matches('idle') && 'row-span-3',
+          matches('idle') && 'row-span-3',
         ])}
       >
         {initButtons}

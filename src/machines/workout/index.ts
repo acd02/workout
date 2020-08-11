@@ -38,7 +38,6 @@ enum Actions {
 enum Guards {
   hasNotReachedLimit = 'hasNotReachedLimit',
   hasReachedLimit = 'hasReachedLimit',
-  isFirstStep = 'isFirstStep',
   isNotFirstStep = 'isNotFirstStep',
 }
 
@@ -111,7 +110,6 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
       }),
     },
     guards: {
-      [Guards.isFirstStep]: context => context.step === 1,
       [Guards.isNotFirstStep]: context => context.step > 1,
       [Guards.hasReachedLimit]: context => {
         const limit = context.mode === 'single' ? 8 : 4
