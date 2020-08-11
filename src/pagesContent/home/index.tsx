@@ -8,7 +8,6 @@ import React from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
-import styles from './styles.module.css'
 import { UndrawSvg } from './UndrawSvg'
 import { getNextStepLabel } from './utils'
 
@@ -37,9 +36,11 @@ export function RenderHome() {
     <div className="mb-2">
       {matches('onGoingSet') && (
         <UndrawSvg
-          className={`${styles.heartbeat} ${
-            context.speed === 'double time' && styles.doubleTime
-          } mb-4 max-w-full`}
+          className={`mb-4 max-w-full ${
+            context.speed === 'double time'
+              ? 'animate-heartbeat-double-time'
+              : 'animate-heartbeat'
+          }`}
           width={500}
         />
       )}
