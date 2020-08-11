@@ -14,6 +14,7 @@ module.exports = {
       ...config.resolve.alias,
       components: computePath('./src/components/'),
       hooks: computePath('./src/hooks/'),
+      illustrations: computePath('./src/illustrations/'),
       machines: computePath('./src/machines/'),
       pages: computePath('./src/pages/'),
       pagesContent: computePath('./src/pagesContent/'),

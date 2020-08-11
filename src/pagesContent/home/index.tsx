@@ -1,38 +1,21 @@
 import { useMachine } from '@xstate/react'
 import cx from 'classcat'
-import { Button } from 'components/atoms/Button'
 import { MainLayout } from 'components/layouts/Main'
 import { Stopwatch } from 'components/organisms/Stopwatch'
+import { UndrawSvg } from 'illustrations/UndrawSvg'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
 import React from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
-import { UndrawSvg } from './UndrawSvg'
-import { getNextStepLabel } from './utils'
+import { InitButtons } from './InitButtons'
+import { NavigationButtons } from './NavigationButtons'
 
 export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
   const { matches, context } = state
 
-  const initButtons = matches('idle') && (
-    <div>
-      <Button
-        label="START SINGLE SIDE SET"
-        color="orange"
-        className="mb-4"
-        onClick={() => send({ type: 'START_SET', mode: 'single' })}
-      />
-      <br />
-      <Button
-        label="START BOTH SIDES SET"
-        color="orange"
-        onClick={() => send({ type: 'START_SET', mode: 'both sides' })}
-      />
-    </div>
-  )
-
-  const mainContent = !matches('idle') && (
+  const mainContent = (
     <div className="mb-2">
       {matches('onGoingSet') && (
         <UndrawSvg
@@ -45,26 +28,6 @@ export function RenderHome() {
         />
       )}
       {matches('inBetweenSteps') && <Stopwatch />}
-    </div>
-  )
-
-  const navigationButtons = !matches('idle') && (
-    <div className="w-full flex flex-wrap justify-center mt-4">
-      <Button
-        disabled={matches('onGoingSet') && context.step === 1}
-        className="w-full mb-8 md:w-auto md:mb-0 md:mr-8"
-        innerBtnClassName="justify-center"
-        label="PREVIOUS"
-        color="orange"
-        onClick={() => send('PREVIOUS')}
-      />
-      <Button
-        className="w-full md:w-auto"
-        innerBtnClassName="justify-center"
-        label={getNextStepLabel(state)}
-        color="orange"
-        onClick={() => send('NEXT')}
-      />
     </div>
   )
 
@@ -81,9 +44,8 @@ export function RenderHome() {
           matches('idle') && 'row-span-3',
         ])}
       >
-        {initButtons}
-        {mainContent}
-        {navigationButtons}
+        {state.matches('idle') ? <InitButtons send={send} /> : mainContent}
+        {!matches('idle') && <NavigationButtons send={send} state={state} />}
       </div>
     </MainLayout>
   )
