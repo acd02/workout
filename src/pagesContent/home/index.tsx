@@ -72,7 +72,7 @@ export function RenderHome() {
       title="workout"
       description="workout"
       header={!matches('idle') && <Header context={context} />}
-      footer={!matches('idle') && <Footer context={context} />}
+      footer={!matches('idle') && <Footer state={state} />}
     >
       <div
         className={cx([
