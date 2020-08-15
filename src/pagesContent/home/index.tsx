@@ -1,5 +1,6 @@
 import { useMachine } from '@xstate/react'
 import cx from 'classcat'
+import { AnimateSwitch } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
 import { Stopwatch } from 'components/organisms/Stopwatch'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
@@ -11,23 +12,31 @@ import { Header } from './Header'
 import { InitButtons } from './InitButtons'
 import { NavigationButtons } from './NavigationButtons'
 
+const ANIMATION_DURATION = 500
+
 export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
   const { matches, context } = state
 
   const mainContent = (
     <div className="mb-2">
-      {matches('onGoingSet') && (
-        <UndrawSvg
-          className={`mb-4 max-w-full ${
-            context.speed === 'double time'
-              ? 'animate-heartbeat-double-time'
-              : 'animate-heartbeat'
-          }`}
-          width={500}
-        />
-      )}
-      {matches('inBetweenSteps') && <Stopwatch />}
+      <AnimateSwitch
+        activeKey={matches('inBetweenSteps') ? 1 : 0}
+        enterClassName="animate-fade-in"
+        exitClassName="animate-fade-out"
+        timeout={ANIMATION_DURATION}
+        elementsTuple={[
+          <UndrawSvg
+            className={`mb-4 max-w-full ${
+              context.speed === 'double time'
+                ? 'animate-heartbeat-double-time'
+                : 'animate-heartbeat'
+            }`}
+            width={500}
+          />,
+          <Stopwatch />,
+        ]}
+      />
     </div>
   )
 

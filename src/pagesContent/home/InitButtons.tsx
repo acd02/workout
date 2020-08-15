@@ -9,7 +9,7 @@ type Props = {
 
 export function InitButtons({ send }: Props) {
   return (
-    <div>
+    <div className="animate-fade-in">
       <Button
         label="START SINGLE SIDE SET"
         color="orange"
