@@ -12,18 +12,24 @@ import { Header } from './Header'
 import { InitButtons } from './InitButtons'
 import { NavigationButtons } from './NavigationButtons'
 
-const ANIMATION_DURATION = 500
+const ANIMATION_DURATION = 250
 
 export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
   const { matches, context } = state
 
+  const isGoingToPrevStep = state.event.type === 'PREVIOUS'
+
   const mainContent = (
     <div className="mb-2">
       <AnimateSwitch
         activeKey={matches('inBetweenSteps') ? 1 : 0}
-        enterClassName="animate-fade-in"
-        exitClassName="animate-fade-out"
+        enterClassName={
+          isGoingToPrevStep ? 'animate-fade-in-right' : 'animate-fade-in-left'
+        }
+        exitClassName={
+          isGoingToPrevStep ? 'animate-fade-out-left' : 'animate-fade-out-right'
+        }
         timeout={ANIMATION_DURATION}
         elementsTuple={[
           <UndrawSvg
@@ -34,6 +40,7 @@ export function RenderHome() {
             }`}
             width={500}
           />,
+
           <Stopwatch />,
         ]}
       />
