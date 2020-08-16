@@ -31,7 +31,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/switch-exhaustiveness-check': 2,
     // React
-    'jsx-quotes': [2, "prefer-double"],
+    'jsx-quotes': [2, 'prefer-double'],
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 1,
     'react/prop-types': 0,
@@ -41,7 +41,7 @@ module.exports = {
     'fp/no-mutation': [
       2,
       {
-        exceptions: [{ property: 'getInitialProps' }],
+        exceptions: [{ property: 'getInitialProps' }, { property: 'current' }],
       },
     ],
     'fp/no-nil': 'off',
