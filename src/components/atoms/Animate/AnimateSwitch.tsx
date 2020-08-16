@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { SwitchTransition, Transition } from 'react-transition-group'
 
 type Props = {
@@ -19,6 +19,11 @@ export function AnimateSwitch({
   timeout,
 }: Props) {
   const activeElm = getActiveElm(elementsTuple, activeKey)
+  // we use a ref here, because passing
+  // a dynamic value for the "exitClassName" prop
+  // will cause a desynchronization for one render (when exiting) everytime it changes
+  const exitClassNameRef = useRef<string | undefined>('')
+  exitClassNameRef.current = exitClassName
 
   return (
     <SwitchTransition mode="out-in">
@@ -32,7 +37,7 @@ export function AnimateSwitch({
         }}
         onExit={(e: HTMLElement) => {
           e?.classList.remove(enterClassName ?? '')
-          e?.classList.add(exitClassName ?? '')
+          e?.classList.add(exitClassNameRef.current ?? '')
         }}
       >
         <div>{activeElm}</div>
