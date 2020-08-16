@@ -91,9 +91,9 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
           const isLastStep =
             context.mode === 'single' ? context.step >= 7 : context.step === 4
 
-          if (isLastStep) return 'double time'
           if (e.type === 'SET_SPEED') return e.speed
-          else return context.speed
+          if (isLastStep) return 'double time'
+          else return 'normal'
         },
       }),
       [Actions.setMode]: assign({
