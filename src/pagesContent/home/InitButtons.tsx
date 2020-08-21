@@ -4,7 +4,7 @@ import React from 'react'
 import { Interpreter } from 'xstate'
 
 type Props = {
-  send: Interpreter<WorkoutContext, any, WorkoutEvent>['send']
+  send: Interpreter<WorkoutContext, UnknownObj, WorkoutEvent>['send']
 }
 
 export function InitButtons({ send }: Props) {

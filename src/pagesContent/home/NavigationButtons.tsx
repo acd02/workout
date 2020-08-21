@@ -7,7 +7,7 @@ import { getNextStepLabel } from './utils'
 
 type Props = {
   state: State<WorkoutContext, WorkoutEvent>
-  send: Interpreter<WorkoutContext, any, WorkoutEvent>['send']
+  send: Interpreter<WorkoutContext, UnknownObj, WorkoutEvent>['send']
 }
 export function NavigationButtons({ send, state }: Props) {
   const { matches, context } = state
