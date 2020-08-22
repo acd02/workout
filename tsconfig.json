@@ -10,7 +10,7 @@
       "pages/*": ["./src/pages/*"],
       "pagesContent/*": ["./src/pagesContent/*"],
       "theme": ["./src/theme.ts"],
-      "utils/*": ["./src/utils/*"],
+      "utils/*": ["./src/utils/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
