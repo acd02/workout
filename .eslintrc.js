@@ -43,7 +43,7 @@ module.exports = {
     'fp/no-mutation': [
       1,
       {
-        exceptions: [{ property: 'getInitialProps' }],
+        exceptions: [{ property: 'getInitialProps' }, { property: 'current' }],
       },
     ],
     'fp/no-let': 1,
@@ -68,7 +68,7 @@ module.exports = {
     'no-shadow': 2,
     'no-unused-expressions': [1, { allowShortCircuit: true }],
     'no-var': 2,
-    quotes: [1, 'single', { allowTemplateLiterals: false }],
+    quotes: ['error', 'single', { allowTemplateLiterals: false, avoidEscape: true }],
     'space-before-function-paren': [
       1,
       { anonymous: 'always', named: 'never', asyncArrow: 'always' },

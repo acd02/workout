@@ -64,7 +64,7 @@ module.exports = {
     'no-shadow': 2,
     'no-unused-expressions': [2, { allowShortCircuit: true }],
     'no-var': 2,
-    quotes: ['error', 'single', { allowTemplateLiterals: false }],
+    quotes: ['error', 'single', { allowTemplateLiterals: false, avoidEscape: true }],
     'space-before-function-paren': [
       2,
       { anonymous: 'always', named: 'never', asyncArrow: 'always' },
