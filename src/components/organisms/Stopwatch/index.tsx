@@ -12,10 +12,12 @@ type Props = {
 export function Stopwatch({ shouldReset, limit = 60 }: Props) {
   const [elapsedTime, setElapsedTime] = useState(0)
 
+  function incrementElapsedTime() {
+    setElapsedTime(t => (t > 999 ? 0 : t + 1))
+  }
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setElapsedTime(t => (t > 999 ? 0 : t + 1))
-    }, 1000)
+    const intervalId = setInterval(incrementElapsedTime, 1000)
 
     return () => clearInterval(intervalId)
   }, [])
