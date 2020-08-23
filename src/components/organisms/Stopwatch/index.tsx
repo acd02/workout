@@ -1,15 +1,13 @@
 import cx from 'classcat'
-import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { useEffect, useState } from 'react'
 
 import { toIntlNumberFormat } from './utils'
 
 type Props = {
-  shouldReset?: boolean
   limit?: number
 }
 
-export function Stopwatch({ shouldReset, limit = 60 }: Props) {
+export function Stopwatch({ limit = 60 }: Props) {
   const [elapsedTime, setElapsedTime] = useState(0)
 
   function incrementElapsedTime() {
@@ -21,13 +19,6 @@ export function Stopwatch({ shouldReset, limit = 60 }: Props) {
 
     return () => clearInterval(intervalId)
   }, [])
-
-  useEffectAfterMount({
-    func: () => {
-      !!shouldReset && setElapsedTime(0)
-    },
-    deps: [shouldReset],
-  })
 
   const formattedElapsedTime =
     limit < elapsedTime ? (
@@ -45,7 +36,6 @@ export function Stopwatch({ shouldReset, limit = 60 }: Props) {
     <div
       className={cx([classNames, limit < elapsedTime && 'border-red-400 text-red-400'])}
     >
-      <p className="border"></p>
       {formattedElapsedTime}
     </div>
   )
