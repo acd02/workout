@@ -5,7 +5,6 @@ const keyframes = require('./tailwind/keyframes')
 
 module.exports = {
   purge: {
-    mode: 'all',
     content: [
       './src/components/**/*.tsx',
       './src/pages/**/*.tsx',
