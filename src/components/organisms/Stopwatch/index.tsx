@@ -57,12 +57,20 @@ export function Stopwatch({ limit = 60 }: Props) {
     )
 
   return (
-    <div className={styles.root}>
+    <div className="relative mx-auto w-64">
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="xMinYMin meet"
-        className={styles.svg}
+        className="transform -rotate-90"
       >
+        <circle
+          className={styles.backgroundCircle}
+          strokeWidth="2"
+          fill="transparent"
+          r="48"
+          cx="50%"
+          cy="50%"
+        />
         <circle
           ref={circleRef}
           className={cx([
@@ -79,8 +87,7 @@ export function Stopwatch({ limit = 60 }: Props) {
       </svg>
       <span
         className={cx([
-          styles.text,
-          'tabular-nums text-6xl transition-colors duration-300',
+          'flex items-center absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 tabular-nums text-6xl transition-colors duration-300',
           limit < elapsedTime && 'text-red-400',
         ])}
       >

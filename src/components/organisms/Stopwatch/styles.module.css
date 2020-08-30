@@ -1,18 +1,5 @@
-.root {
-  position: relative;
-  margin: 0 auto;
-  width: 300px;
-
-  &::after {
-    @apply inset-0;
-
-    position: absolute;
-    z-index: -1;
-    margin: 2px;
-    border: 8px solid theme('backgroundColor.gray.200');
-    border-radius: 50%;
-    content: '';
-  }
+.backgroundCircle {
+  stroke: theme('backgroundColor.gray.200');
 }
 
 .stroke {
@@ -23,20 +10,6 @@
   stroke: theme('backgroundColor.red.400');
 }
 
-.svg {
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
 .circle {
   transition: stroke-dashoffset 1s linear;
-}
-
-.text {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  align-items: center;
-  transform: translate(-50%, -50%);
 }
