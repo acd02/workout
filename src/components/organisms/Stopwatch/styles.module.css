@@ -4,13 +4,14 @@
   width: 300px;
 
   &::after {
+    @apply inset-0;
+
     position: absolute;
     z-index: -1;
     margin: 2px;
     border: 8px solid theme('backgroundColor.gray.200');
     border-radius: 50%;
     content: '';
-    inset: 0;
   }
 }
 
