@@ -1,6 +1,7 @@
 const plugin = require('tailwindcss/plugin')
 const utilities = require('./tailwind/utilities')
 const animation = require('./tailwind/animation')
+const colors = require('./tailwind/colors')
 const keyframes = require('./tailwind/keyframes')
 
 module.exports = {
@@ -12,7 +13,6 @@ module.exports = {
     ],
   },
   plugins: [
-    require('@tailwindcss/ui'),
     plugin(function ({ addVariant }) {
       addVariant('important', ({ container }) => {
         container.walkRules(rule => {
@@ -38,6 +38,7 @@ module.exports = {
     }),
   ],
   theme: {
+    colors,
     extend: {
       animation,
       keyframes,

@@ -87,7 +87,7 @@ export function Stopwatch({ limit = 60 }: Props) {
       </svg>
       <span
         className={cx([
-          'flex items-center absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 tabular-nums text-6xl transition-colors duration-300',
+          'flex items-center absolute top-50 left-50 transform -translate-y-1/2 -translate-x-1/2 tabular-nums text-6xl transition-colors duration-300',
           limit < elapsedTime && 'text-red-400',
         ])}
       >
