@@ -58,18 +58,14 @@ export function Stopwatch({ limit = 60 }: Props) {
 
   return (
     <div className="relative mx-auto w-64">
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMinYMin meet"
-        className="transform -rotate-90"
-      >
+      <svg viewBox="0 0 100 100" className="transform -rotate-90">
         <circle
           className={styles.backgroundCircle}
           strokeWidth="2"
           fill="transparent"
           r="48"
-          cx="50%"
-          cy="50%"
+          cx="50"
+          cy="50"
         />
         <circle
           ref={circleRef}
@@ -81,8 +77,8 @@ export function Stopwatch({ limit = 60 }: Props) {
           strokeLinecap="round"
           fill="transparent"
           r="48"
-          cx="50%"
-          cy="50%"
+          cx="50"
+          cy="50"
         />
       </svg>
       <span
