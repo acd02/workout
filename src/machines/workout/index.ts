@@ -10,15 +10,14 @@ type WorkoutStateSchema = {
 }
 /* eslint-enable */
 
+type Mode = 'single' | 'both sides'
+type Speed = 'normal' | 'double time'
 // The events that the machine handles
 export type WorkoutEvent =
   | { type: 'START_SET'; mode: Mode }
   | { type: 'SET_SPEED'; speed: Speed }
   | { type: 'NEXT' }
   | { type: 'PREVIOUS' }
-
-type Mode = 'single' | 'both sides'
-type Speed = 'normal' | 'double time'
 
 // The context (extended state) of the machine
 export type WorkoutContext = {
