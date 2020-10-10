@@ -1,11 +1,11 @@
-import React, { ReactElement, useRef } from 'react'
+import React, { ReactNode, useRef } from 'react'
 import { SwitchTransition, Transition } from 'react-transition-group'
 
 type Props = {
   activeKey: 0 | 1
   enterClassName?: string
   exitClassName?: string
-  elementsTuple: [ReactElement, ReactElement]
+  elementsTuple: [ReactNode, ReactNode]
   timeout: number
   shouldAnimateOnMount?: boolean
 }
@@ -50,6 +50,6 @@ export function AnimateSwitch({
 function getActiveElm(
   elementsTuple: Props['elementsTuple'],
   activeKey: 0 | 1
-): ReactElement {
+): ReactNode {
   return elementsTuple[activeKey]
 }
