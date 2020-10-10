@@ -1,0 +1,14 @@
+.root > * {
+  flex-basis: calc((theme('screens.md') - (100% - theme('spacing.2'))) * 999);
+  flex-grow: 1;
+  margin: calc(theme('spacing.4') / 2);
+  max-width: 275px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}

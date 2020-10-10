@@ -6,7 +6,7 @@ type Props = { label: string; color: Colors; size?: 'xl' }
 
 export function Badge({ label, color, size }: Props) {
   const sizeClassNames =
-    size === 'xl' ? 'px-5 text-4xl leading-none py-2' : 'px-3 py-0.5 text-lg leading-5'
+    size === 'xl' ? 'px-4 text-2xl leading-none py-1' : 'px-3 py-0.5 text-lg leading-5'
 
   const colorMapper: Record<Colors, string> = {
     gray: 'bg-gray-100 text-gray-800',

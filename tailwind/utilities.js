@@ -1,4 +1,7 @@
 module.exports = {
+  '.flex-basis-full': {
+    'flex-basis': '100%',
+  },
   '.flip-x': {
     transform: 'scaleX(-1)',
   },
