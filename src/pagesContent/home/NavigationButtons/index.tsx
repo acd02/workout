@@ -22,6 +22,7 @@ export function NavigationButtons({ send, state }: Props) {
       ])}
     >
       <Button
+        outline
         disabled={matches('onGoingSet') && context.step === 1}
         innerBtnClassName="justify-center"
         label="PREVIOUS"
