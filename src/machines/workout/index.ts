@@ -26,19 +26,19 @@ export type WorkoutContext = {
   speed?: Speed
 }
 
-enum Actions {
-  incrementStep = 'incrementStep',
-  decrementStep = 'decrementStep',
-  setMode = 'setMode',
-  setSpeed = 'setSpeed',
-  resetContext = 'resetContext',
-}
+const Actions = {
+  incrementStep: 'incrementStep',
+  decrementStep: 'decrementStep',
+  setMode: 'setMode',
+  setSpeed: 'setSpeed',
+  resetContext: 'resetContext',
+} as const
 
-enum Guards {
-  hasNotReachedLimit = 'hasNotReachedLimit',
-  hasReachedLimit = 'hasReachedLimit',
-  isNotFirstStep = 'isNotFirstStep',
-}
+const Guards = {
+  hasNotReachedLimit: 'hasNotReachedLimit',
+  hasReachedLimit: 'hasReachedLimit',
+  isNotFirstStep: 'isNotFirstStep',
+} as const
 
 export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>(
   {
