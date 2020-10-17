@@ -22,7 +22,7 @@ export function Button({
   innerBtnClassName,
 }: Props) {
   const commonBtnClassNames =
-    'inline-flex items-center w-full  px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white transition ease-in-out duration-150 focus:outline-none focus:shadow-outline'
+    'inline-flex items-center w-full px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white transition ease-in-out duration-150 focus:outline-none focus:shadow-outline'
 
   const colorMapper: Record<Colors, string> = {
     gray: 'bg-gray-500 hover:bg-gray-400 focus:border-gray-600 active:bg-gray-600',
