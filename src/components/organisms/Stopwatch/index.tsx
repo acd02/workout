@@ -56,30 +56,38 @@ export function Stopwatch({ limit = 60 }: Props) {
       toIntlNumberFormat(elapsedTime)
     )
 
+  const backgroundCircle = (
+    <circle
+      className={styles.backgroundCircle}
+      strokeWidth="2"
+      fill="transparent"
+      r="48"
+      cx="50"
+      cy="50"
+    />
+  )
+
+  const foregroundCircle = (
+    <circle
+      ref={circleRef}
+      className={cx([
+        elapsedTime > 0 && styles.circle,
+        elapsedTime > limit ? styles.strokeIsOverLimit : styles.stroke,
+      ])}
+      strokeWidth="2"
+      strokeLinecap="round"
+      fill="transparent"
+      r="48"
+      cx="50"
+      cy="50"
+    />
+  )
+
   return (
     <div className="relative mx-auto w-64">
       <svg viewBox="0 0 100 100" className="transform -rotate-90">
-        <circle
-          className={styles.backgroundCircle}
-          strokeWidth="2"
-          fill="transparent"
-          r="48"
-          cx="50"
-          cy="50"
-        />
-        <circle
-          ref={circleRef}
-          className={cx([
-            styles.circle,
-            elapsedTime > limit ? styles.strokeIsOverLimit : styles.stroke,
-          ])}
-          strokeWidth="2"
-          strokeLinecap="round"
-          fill="transparent"
-          r="48"
-          cx="50"
-          cy="50"
-        />
+        {backgroundCircle}
+        {foregroundCircle}
       </svg>
       <span
         className={cx([
