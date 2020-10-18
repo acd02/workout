@@ -5,7 +5,7 @@
   "license": "ISC",
   "scripts": {
     "build": "npm run lint:prod && next build",
-    "build-static": "npm run lint:prod && next build && next export",
+    "build:static": "npm run lint:prod && next build && next export",
     "dev": "next",
     "export": "rm -rf .next && npm run build && next export",
     "lint": "eslint --config .eslintrc.js ./src --ext .ts,.tsx,.js --fix",
