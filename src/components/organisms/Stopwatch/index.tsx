@@ -35,17 +35,14 @@ export function Stopwatch({ limit = 60 }: Props) {
     return () => clearInterval(intervalId)
   }, [])
 
-  useEffectAfterMount({
-    func: () => {
-      elapsedTime <= limit &&
-        setProgress({
-          circle: circleRef.current,
-          circumference: circumferenceRef.current,
-          percent: (elapsedTime / limit) * 100,
-        })
-    },
-    deps: [elapsedTime],
-  })
+  useEffectAfterMount(() => {
+    elapsedTime <= limit &&
+      setProgress({
+        circle: circleRef.current,
+        circumference: circumferenceRef.current,
+        percent: (elapsedTime / limit) * 100,
+      })
+  }, [elapsedTime])
 
   const formattedElapsedTime =
     limit < elapsedTime ? (

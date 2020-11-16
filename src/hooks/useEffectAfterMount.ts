@@ -1,16 +1,14 @@
-import { useEffect, useRef } from 'react'
-
-type Props = {
-  func: () => void
-  cleanup?: () => void
-  deps?: React.DependencyList
-}
+import { DependencyList, useEffect, useRef } from 'react'
 
 /**
  * Equivalent to useEffect, but won't get executed on mount
  *
  */
-export function useEffectAfterMount({ func, cleanup, deps = [] }: Props): void {
+export function useEffectAfterMount(
+  func: () => void,
+  deps?: DependencyList,
+  cleanup?: () => void
+): void {
   const isInitialMount = useRef(true)
 
   useEffect(() => {
@@ -20,5 +18,5 @@ export function useEffectAfterMount({ func, cleanup, deps = [] }: Props): void {
     isInitialMount.current = false
 
     return () => cleanup?.()
-  }, deps)
+  }, deps || [])
 }
