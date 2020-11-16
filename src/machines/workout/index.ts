@@ -13,14 +13,14 @@ type WorkoutStateSchema = {
 type Mode = 'single' | 'both sides'
 type Speed = 'normal' | 'double time'
 // The events that the machine handles
-export type WorkoutEvent =
+type WorkoutEvent =
   | { type: 'START_SET'; mode: Mode }
   | { type: 'SET_SPEED'; speed: Speed }
   | { type: 'NEXT' }
   | { type: 'PREVIOUS' }
 
 // The context (extended state) of the machine
-export type WorkoutContext = {
+type WorkoutContext = {
   step: number
   mode?: Mode
   speed?: Speed
@@ -40,7 +40,7 @@ const Guards = {
   isNotFirstStep: 'isNotFirstStep',
 } as const
 
-export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>(
+const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>(
   {
     key: 'workout',
     initial: 'idle',
@@ -123,3 +123,6 @@ export const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, Workou
     },
   }
 )
+
+export type { WorkoutEvent, WorkoutContext }
+export { workoutMachine }

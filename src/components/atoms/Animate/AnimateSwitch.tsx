@@ -10,7 +10,7 @@ type Props = {
   shouldAnimateOnMount?: boolean
 }
 
-export function AnimateSwitch({
+function AnimateSwitch({
   enterClassName,
   exitClassName,
   shouldAnimateOnMount = true,
@@ -53,3 +53,5 @@ function getActiveElm(
 ): ReactNode {
   return elementsTuple[activeKey]
 }
+
+export { AnimateSwitch }

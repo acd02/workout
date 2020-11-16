@@ -1,4 +1,4 @@
-export function toIntlNumberFormat(value: number): string {
+function toIntlNumberFormat(value: number): string {
   return new Intl.NumberFormat('en-EN', {
     style: 'decimal',
     minimumIntegerDigits: 2,
@@ -11,8 +11,10 @@ type SetProgressArgs = {
   circle: SVGCircleElement | null
 }
 
-export function setProgress({ percent, circumference, circle }: SetProgressArgs) {
+function setProgress({ percent, circumference, circle }: SetProgressArgs) {
   const offset = circumference - (percent / 100) * circumference
   /* eslint-disable-next-line fp/no-mutation */
   if (circle) circle.style.strokeDashoffset = `${offset}`
 }
+
+export { toIntlNumberFormat, setProgress }
