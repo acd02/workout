@@ -56,8 +56,9 @@ module.exports = {
     'import/no-absolute-path': 0,
     'import/exports-last': 1,
     // simple-import-sort
-    'simple-import-sort/sort': 1,
+    'simple-import-sort/imports': 1,
     // Misc
+    'array-callback-return': 1,
     complexity: [1, 5],
     curly: [1, 'multi', 'consistent'],
     'max-lines': [1, { max: 150, skipBlankLines: true, skipComments: true }],
