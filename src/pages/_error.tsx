@@ -7,7 +7,7 @@ type Props = {
 
 const Error: NextPage<Props, unknown> = ({ statusCode }) => {
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex items-center justify-center h-full">
       {(() => {
         if (statusCode)
           return statusCode === 404

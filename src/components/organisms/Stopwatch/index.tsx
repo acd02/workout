@@ -81,7 +81,7 @@ export function Stopwatch({ limit = 60 }: Props) {
   )
 
   return (
-    <div className="relative mx-auto w-64">
+    <div className="relative w-64 mx-auto">
       <svg viewBox="0 0 100 100" className="transform -rotate-90">
         {backgroundCircle}
         {foregroundCircle}

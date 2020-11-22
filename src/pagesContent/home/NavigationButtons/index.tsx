@@ -11,6 +11,7 @@ type Props = {
   state: State<WorkoutContext, WorkoutEvent>
   send: Interpreter<WorkoutContext, UnknownObj, WorkoutEvent>['send']
 }
+
 export function NavigationButtons({ send, state }: Props) {
   const { matches, context } = state
 
@@ -18,7 +19,7 @@ export function NavigationButtons({ send, state }: Props) {
     <div
       className={cx([
         styles.root,
-        'flex flex-wrap items-baseline justify-center flex-basis-full',
+        'flex-basis-full flex flex-wrap items-baseline justify-center',
       ])}
     >
       <Button

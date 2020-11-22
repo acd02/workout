@@ -4,27 +4,28 @@ import { Colors } from 'theme'
 
 type Props = { label: string; color: Colors; size?: 'xl' }
 
+const className = 'text-gray-800 bg-gray-100'
 export function Badge({ label, color, size }: Props) {
   const sizeClassNames =
-    size === 'xl' ? 'px-4 text-2xl leading-none py-1' : 'px-3 py-0.5 text-lg leading-5'
+    size === 'xl' ? 'px-4 py-1 text-2xl leading-none' : 'px-3 py-0.5 text-lg leading-5'
 
   const colorMapper: Record<Colors, string> = {
-    gray: 'bg-gray-100 text-gray-800',
-    red: 'bg-red-100 text-red-800',
-    orange: 'bg-orange-100 text-orange-800',
-    yellow: 'bg-yellow-100 text-yellow-800',
-    green: 'bg-green-100 text-green-800',
-    teal: 'bg-teal-100 text-teal-800',
-    blue: 'bg-blue-100 text-blue-800',
-    indigo: 'bg-indigo-100 text-indigo-800',
-    purple: 'bg-purple-100 text-purple-800',
-    pink: 'bg-pink-100 text-pink-800',
+    gray: 'text-gray-800 bg-gray-100',
+    red: 'text-red-800 bg-red-100',
+    orange: 'text-orange-800 bg-orange-100',
+    yellow: 'text-yellow-800 bg-yellow-100',
+    green: 'text-green-800 bg-green-100',
+    teal: 'text-teal-800 bg-teal-100',
+    blue: 'text-blue-800 bg-blue-100',
+    indigo: 'text-indigo-800 bg-indigo-100',
+    purple: 'text-purple-800 bg-purple-100',
+    pink: 'text-pink-800 bg-pink-100',
   }
 
   return (
     <span
       className={cx([
-        'inline-flex items-center rounded-full font-medium',
+        'inline-flex items-center font-medium rounded-full',
         sizeClassNames,
         colorMapper[color],
       ])}

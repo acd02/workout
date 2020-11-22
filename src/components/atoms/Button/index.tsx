@@ -22,45 +22,46 @@ export function Button({
   innerBtnClassName,
 }: Props) {
   const commonBtnClassNames =
-    'inline-flex items-center w-full px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white transition ease-in-out duration-150 focus:outline-none focus:ring-2 focus:ring-opacity-50'
+    'focus:outline-none focus:ring-2 focus:ring-opacity-50 inline-flex items-center w-full px-6 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent rounded-md'
 
   const colorMapper: Record<Colors, string> = {
-    gray: 'bg-gray-500 hover:bg-gray-400 focus:ring-gray-600 active:bg-gray-600',
-    red: 'bg-red-500 hover:bg-red-400 focus:border-red-600 active:bg-red-600',
+    gray: 'hover:bg-gray-400 focus:ring-gray-600 active:bg-gray-600 bg-gray-500',
+    red: 'hover:bg-red-400 focus:ring-red-600 active:bg-red-600 bg-red-500',
     orange:
-      'bg-orange-500 hover:bg-orange-400 focus:ring-orange-600 active:bg-orange-600',
+      'hover:bg-orange-400 focus:ring-orange-600 active:bg-orange-600 bg-orange-500',
     yellow:
-      'bg-yellow-500 hover:bg-yellow-400 focus:ring-yellow-600 active:bg-yellow-600',
-    green: 'bg-green-500 hover:bg-green-400 focus:ring-green-600 active:bg-green-600',
-    teal: 'bg-teal-500 hover:bg-teal-400 focus:ring-teal-600 active:bg-teal-600',
-    blue: 'bg-blue-500 hover:bg-blue-400 focus:ring-blue-600 active:bg-blue-600',
+      'hover:bg-yellow-400 focus:ring-yellow-600 active:bg-yellow-600 bg-yellow-500',
+    green: 'hover:bg-green-400 focus:ring-green-600 active:bg-green-600 bg-green-500',
+    teal: 'hover:bg-teal-400 focus:ring-teal-600 active:bg-teal-600 bg-teal-500',
+    blue: 'hover:bg-blue-400 focus:ring-blue-600 active:bg-blue-600 bg-blue-500',
     indigo:
-      'bg-indigo-500 hover:bg-indigo-400 focus:ring-indigo-600 active:bg-indigo-600',
+      'hover:bg-indigo-400 focus:ring-indigo-600 active:bg-indigo-600 bg-indigo-500',
     purple:
-      'bg-purple-500 hover:bg-purple-400 focus:ring-purple-600 active:bg-purple-600',
-    pink: 'bg-pink-500 hover:bg-pink-400 focus:ring-pink-600 active:bg-pink-600',
+      'hover:bg-purple-400 focus:ring-purple-600 active:bg-purple-600 bg-purple-500',
+    pink: 'hover:bg-pink-400 focus:ring-pink-600 active:bg-pink-600 bg-pink-500',
   }
 
   const outlineColorMapper: Record<Colors, string> = {
     gray:
-      'bg-gray-200 hover:bg-gray-100 focus:ring-gray-600 active:bg-gray-600 text-gray-500',
-    red: 'bg-red-200 hover:bg-red-100 focus:ring-red-600 active:bg-red-600 text-red-500',
+      'hover:bg-gray-100 focus:ring-gray-600 active:bg-gray-600 text-gray-500 bg-transparent border-gray-500',
+    red:
+      'hover:bg-red-100 focus:ring-red-600 active:bg-red-600 text-red-500 bg-transparent border-red-500',
     orange:
-      'bg-transparent hover:bg-orange-100 focus:ring-orange-600 active:bg-orange-600 text-orange-500 border-orange-500',
+      'hover:bg-orange-100 focus:ring-orange-600 active:bg-orange-600 text-orange-500 bg-transparent border-orange-500',
     yellow:
-      'bg-transparent hover:bg-yellow-100 focus:ring-yellow-600 active:bg-yellow-600 text-yellow-500 border-yellow-500',
+      'hover:bg-yellow-100 focus:ring-yellow-600 active:bg-yellow-600 text-yellow-500 bg-transparent border-yellow-500',
     green:
-      'bg-transparent hover:bg-green-100 focus:ring-green-600 active:bg-green-600 text-green-500 border-green-500',
+      'hover:bg-green-100 focus:ring-green-600 active:bg-green-600 text-green-500 bg-transparent border-green-500',
     teal:
-      'bg-transparent hover:bg-teal-100 focus:ring-teal-600 active:bg-teal-600 text-teal-500 border-teal-500',
+      'hover:bg-teal-100 focus:ring-teal-600 active:bg-teal-600 text-teal-500 bg-transparent border-teal-500',
     blue:
-      'bg-transparent hover:bg-blue-100 focus:ring-blue-600 active:bg-blue-600 text-blue-500 border-blue-500',
+      'hover:bg-blue-100 focus:ring-blue-600 active:bg-blue-600 text-blue-500 bg-transparent border-blue-500',
     indigo:
-      'bg-transparent hover:bg-indigo-100 focus:ring-indigo-600 active:bg-indigo-600 text-indigo-500 border-indigo-500',
+      'hover:bg-indigo-100 focus:ring-indigo-600 active:bg-indigo-600 text-indigo-500 bg-transparent border-indigo-500',
     purple:
-      'bg-transparent hover:bg-purple-100 focus:ring-purple-600 active:bg-purple-600 text-purple-500 border-purple-500',
+      'hover:bg-purple-100 focus:ring-purple-600 active:bg-purple-600 text-purple-500 bg-transparent border-purple-500',
     pink:
-      'bg-transparent hover:bg-pink-100 focus:ring-pink-600 active:bg-pink-600 text-pink-500 border-pink-500',
+      'hover:bg-pink-100 focus:ring-pink-600 active:bg-pink-600 text-pink-500 bg-transparent border-pink-500',
   }
 
   return (

@@ -12,10 +12,10 @@ export function Footer({ state }: DisplayBottomInfoProps) {
   const progress = 100 * ((state.matches('onGoingSet') ? step - 1 : step) / totalStep)
 
   const progressBar = (
-    <div className="overflow-hidden mx-auto h-2 mb-4 md:mb-8 text-xs flex rounded bg-orange-200 w-1/2">
+    <div className="md:mb-8 flex w-1/2 h-2 mx-auto mb-4 overflow-hidden text-xs bg-orange-200 rounded">
       <div
         style={{ width: `${progress}%` }}
-        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500 transition-all duration-75"
+        className="whitespace-nowrap flex flex-col justify-center text-center text-white transition-all duration-75 bg-orange-500 shadow-none"
       />
     </div>
   )
@@ -24,14 +24,14 @@ export function Footer({ state }: DisplayBottomInfoProps) {
       <>LAST STEP</>
     ) : (
       <>
-        STEP: <span className="text-orange-400 font-semibold">{step}</span> /{' '}
+        STEP: <span className="font-semibold text-orange-400">{step}</span> /{' '}
         {mode === 'single' ? '8' : '4'}
       </>
     )
 
   return (
     <div className="w-full text-center">
-      <div className="text-gray-900 text-2xl leading-5 font-medium">
+      <div className="text-2xl font-medium leading-5 text-gray-900">
         {progressBar}
         {content}
       </div>
