@@ -4,7 +4,6 @@ import { Colors } from 'theme'
 
 type Props = { label: string; color: Colors; size?: 'xl' }
 
-const className = 'text-gray-800 bg-gray-100'
 export function Badge({ label, color, size }: Props) {
   const sizeClassNames =
     size === 'xl' ? 'px-4 py-1 text-2xl leading-none' : 'px-3 py-0.5 text-lg leading-5'
