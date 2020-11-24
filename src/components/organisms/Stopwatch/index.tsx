@@ -26,8 +26,6 @@ export function Stopwatch({ limit = 60 }: Props) {
 
       /* eslint-disable-next-line fp/no-mutation */
       circle.style.strokeDasharray = `${circumferenceRef.current} ${circumferenceRef.current}`
-      /* eslint-disable-next-line fp/no-mutation */
-      circle.style.strokeDashoffset = `${circumferenceRef.current}`
     })
 
     const intervalId = setInterval(incrementElapsedTime, 1000)
@@ -50,13 +48,14 @@ export function Stopwatch({ limit = 60 }: Props) {
         <span className="text-2xl">+</span> {toIntlNumberFormat(elapsedTime - limit)}
       </>
     ) : (
-      toIntlNumberFormat(elapsedTime)
+      toIntlNumberFormat(limit - elapsedTime)
     )
 
   const backgroundCircle = (
     <circle
-      className={styles.backgroundCircle}
+      className={cx([styles.backgroundCircle, elapsedTime > limit && styles.isOverLimit])}
       strokeWidth="2"
+      stroke="blue"
       fill="transparent"
       r="48"
       cx="50"
@@ -67,10 +66,7 @@ export function Stopwatch({ limit = 60 }: Props) {
   const foregroundCircle = (
     <circle
       ref={circleRef}
-      className={cx([
-        elapsedTime > 0 && styles.circle,
-        elapsedTime > limit ? styles.strokeIsOverLimit : styles.stroke,
-      ])}
+      className={styles.foregroundCircle}
       strokeWidth="2"
       strokeLinecap="round"
       fill="transparent"

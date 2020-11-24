@@ -14,7 +14,7 @@ type SetProgressArgs = {
 function setProgress({ percent, circumference, circle }: SetProgressArgs) {
   const offset = circumference - (percent / 100) * circumference
   /* eslint-disable-next-line fp/no-mutation */
-  if (circle) circle.style.strokeDashoffset = `${offset}`
+  if (circle) circle.style.strokeDashoffset = `${circumference - offset}`
 }
 
 export { toIntlNumberFormat, setProgress }

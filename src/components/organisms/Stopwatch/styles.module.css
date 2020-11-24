@@ -2,14 +2,11 @@
   stroke: theme('backgroundColor.gray.200');
 }
 
-.stroke {
-  stroke: theme('backgroundColor.orange.500');
-}
-
-.strokeIsOverLimit {
+.isOverLimit {
   stroke: theme('backgroundColor.red.400');
 }
 
-.circle {
+.foregroundCircle {
+  stroke: theme('backgroundColor.orange.500');
   transition: stroke-dashoffset 1s linear;
 }
