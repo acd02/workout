@@ -19,6 +19,11 @@ export function RenderHome() {
   const { matches, context } = state
 
   const isGoingToPrevStep = state.event.type === 'PREVIOUS'
+  const limit = (() => {
+    if (context.mode === 'single' && context.step === 8) return 60
+
+    return context.mode === 'both sides' ? 60 : 30
+  })()
 
   const mainContent = (
     <div className="mb-2">
@@ -41,7 +46,7 @@ export function RenderHome() {
             width={500}
           />,
 
-          <Timer limit={context.mode === 'both sides' ? 60 : 30} />,
+          <Timer limit={limit} />,
         ]}
       />
     </div>
