@@ -41,7 +41,7 @@ export function RenderHome() {
             width={500}
           />,
 
-          <Timer />,
+          <Timer limit={context.mode === 'both sides' ? 60 : 30} />,
         ]}
       />
     </div>
