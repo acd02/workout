@@ -10,7 +10,7 @@ type Props = {
   limit?: number
 }
 
-export function Stopwatch({ limit = 60 }: Props) {
+export function Timer({ limit = 60 }: Props) {
   const [elapsedTime, setElapsedTime] = useState(0)
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)

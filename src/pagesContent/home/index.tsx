@@ -2,7 +2,7 @@ import { useMachine } from '@xstate/react'
 import cx from 'classcat'
 import { AnimateSwitch } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
-import { Stopwatch } from 'components/organisms/Stopwatch'
+import { Timer } from 'components/organisms/Timer'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
 import React from 'react'
@@ -41,7 +41,7 @@ export function RenderHome() {
             width={500}
           />,
 
-          <Stopwatch />,
+          <Timer />,
         ]}
       />
     </div>
