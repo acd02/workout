@@ -5,7 +5,8 @@ export function getNextStepLabel({
   matches,
   context,
 }: State<WorkoutContext, WorkoutEvent>) {
-  const limit = context.mode === 'single' ? 8 : 4
+  const limit =
+    context.mode === 'single' ? context.singleModeTotalSteps : context.bothModeTotalSteps
 
   const isOngoingSet = matches('onGoingSet')
 

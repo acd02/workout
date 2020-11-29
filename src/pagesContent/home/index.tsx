@@ -20,7 +20,8 @@ export function RenderHome() {
 
   const isGoingToPrevStep = state.event.type === 'PREVIOUS'
   const limit = (() => {
-    if (context.mode === 'single' && context.step === 8) return 60
+    if (context.mode === 'single' && context.step === context.singleModeTotalSteps)
+      return 60
 
     return context.mode === 'both sides' ? 60 : 30
   })()

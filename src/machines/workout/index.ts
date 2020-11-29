@@ -24,6 +24,8 @@ type WorkoutContext = {
   step: number
   mode?: Mode
   speed?: Speed
+  singleModeTotalSteps: number
+  bothModeTotalSteps: number
 }
 
 const Actions = {
@@ -44,7 +46,7 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
   {
     key: 'workout',
     initial: 'idle',
-    context: { step: 0 },
+    context: { step: 0, singleModeTotalSteps: 8, bothModeTotalSteps: 4 },
     states: {
       idle: {
         on: {
@@ -87,8 +89,11 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
       }),
       [Actions.setSpeed]: assign({
         speed: (context, e) => {
+          const { mode, step, singleModeTotalSteps, bothModeTotalSteps } = context
           const isLastStep =
-            context.mode === 'single' ? context.step >= 7 : context.step === 4
+            mode === 'single'
+              ? step >= singleModeTotalSteps - 1
+              : step === bothModeTotalSteps
 
           if (e.type === 'SET_SPEED') return e.speed
           if (isLastStep) return 'double time'
@@ -111,14 +116,16 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
     guards: {
       [Guards.isNotFirstStep]: context => context.step > 1,
       [Guards.hasReachedLimit]: context => {
-        const limit = context.mode === 'single' ? 8 : 4
+        const { mode, singleModeTotalSteps, bothModeTotalSteps, step } = context
+        const limit = mode === 'single' ? singleModeTotalSteps : bothModeTotalSteps
 
-        return context.step >= limit
+        return step >= limit
       },
       [Guards.hasNotReachedLimit]: context => {
-        const limit = context.mode === 'single' ? 8 : 4
+        const { mode, singleModeTotalSteps, bothModeTotalSteps, step } = context
+        const limit = mode === 'single' ? singleModeTotalSteps : bothModeTotalSteps
 
-        return context.step < limit
+        return step < limit
       },
     },
   }
