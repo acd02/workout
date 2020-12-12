@@ -28,10 +28,13 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/prefer-interface': 0,
     '@typescript-eslint/no-object-literal-type-assertion': 0,
-    "@typescript-eslint/no-shadow": 2,
+    '@typescript-eslint/no-shadow': 2,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-unused-vars': 0,
-    '@typescript-eslint/no-use-before-define': 0,
+    '@typescript-eslint/no-use-before-define': [
+      2,
+      { functions: false, classes: true, variables: true },
+    ],
     '@typescript-eslint/switch-exhaustiveness-check': 2,
     // React
     'jsx-quotes': [1, 'prefer-double'],
@@ -70,6 +73,7 @@ module.exports = {
     'no-debugger': 1,
     'no-shadow': 0,
     'no-unused-expressions': [1, { allowShortCircuit: true }],
+    'no-use-before-define': 0,
     'no-var': 2,
     quotes: [1, 'single', { allowTemplateLiterals: false, avoidEscape: true }],
     'space-before-function-paren': [
