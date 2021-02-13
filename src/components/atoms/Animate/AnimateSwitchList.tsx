@@ -1,3 +1,4 @@
+import cx from 'classcat'
 import React, { ReactElement, ReactNode, useRef } from 'react'
 import { SwitchTransition, Transition } from 'react-transition-group'
 
@@ -10,12 +11,14 @@ type Props = {
   shouldAnimateOnMount?: boolean
   enterClassName?: string
   exitClassName?: string
+  className?: string
 }
 
 const AnimateSwitchList = ({
   activeIndex,
   enterClassName,
   exitClassName,
+  className,
   items,
   duration = 250,
   shouldAnimateOnMount,
@@ -37,7 +40,9 @@ const AnimateSwitchList = ({
           })
 
           return (
-            <div className={classNameMapper[transitionStatus]}>{items[activeIndex]}</div>
+            <div className={cx([classNameMapper[transitionStatus], className])}>
+              {items[activeIndex]}
+            </div>
           )
         }}
       </Transition>

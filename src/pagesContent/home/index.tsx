@@ -27,10 +27,11 @@ export function RenderHome() {
   })()
 
   const mainContent = (
-    <div className="md:h-auto flex items-center h-56 mt-auto mb-2">
+    <div className=" flex items-center justify-center mt-auto mb-2">
       <AnimateSwitchList
         shouldAnimateOnMount={true}
         activeIndex={matches('inBetweenSteps') ? 1 : 0}
+        className="md:h-auto md:w-full w-4/5 h-48"
         enterClassName={
           isGoingToPrevStep ? 'animate-fade-in-right' : 'animate-fade-in-left'
         }
@@ -40,12 +41,13 @@ export function RenderHome() {
         duration={ANIMATION_DURATION}
         items={[
           <UndrawSvg
-            className={`mb-4 max-w-full mx-auto w-4/5 md:w-full ${
+            className={`mb-4 max-w-full mx-auto ${
               context.speed === 'double time'
                 ? 'animate-heartbeat-double-time'
                 : 'animate-heartbeat'
             }`}
             width={500}
+            height="inherit"
           />,
           <Timer limit={limit} step={context.step} />,
         ]}

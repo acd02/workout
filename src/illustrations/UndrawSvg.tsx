@@ -3,14 +3,16 @@ import React from 'react'
 
 type Props = {
   width: number
+  height: number | string
   className?: string
 }
-export function UndrawSvg({ width, className }: Props) {
+export function UndrawSvg({ width, height, className }: Props) {
   return (
     <svg
       className={cx([className])}
       data-name="Layer 1"
       width={width}
+      height={height}
       viewBox="0 0 1020 668.18"
     >
       <path
