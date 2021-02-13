@@ -10,7 +10,7 @@ type WorkoutStateSchema = {
 }
 /* eslint-enable */
 
-type Mode = 'single' | 'both sides'
+type Mode = 'normal' | 'single'
 type Speed = 'normal' | 'double time'
 // The events that the machine handles
 type WorkoutEvent =
@@ -25,7 +25,7 @@ type WorkoutContext = {
   mode?: Mode
   speed?: Speed
   singleModeTotalSteps: number
-  bothModeTotalSteps: number
+  normalModeTotalSteps: number
 }
 
 const Actions = {
@@ -46,7 +46,7 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
   {
     key: 'workout',
     initial: 'idle',
-    context: { step: 0, singleModeTotalSteps: 8, bothModeTotalSteps: 4 },
+    context: { step: 0, singleModeTotalSteps: 8, normalModeTotalSteps: 4 },
     states: {
       idle: {
         on: {
@@ -89,11 +89,11 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
       }),
       [Actions.setSpeed]: assign({
         speed: (context, e) => {
-          const { mode, step, singleModeTotalSteps, bothModeTotalSteps } = context
+          const { mode, step, singleModeTotalSteps, normalModeTotalSteps } = context
           const isLastStep =
             mode === 'single'
               ? step >= singleModeTotalSteps - 1
-              : step === bothModeTotalSteps
+              : step === normalModeTotalSteps
 
           if (e.type === 'SET_SPEED') return e.speed
           if (isLastStep) return 'double time'
@@ -116,14 +116,14 @@ const workoutMachine = Machine<WorkoutContext, WorkoutStateSchema, WorkoutEvent>
     guards: {
       [Guards.isNotFirstStep]: context => context.step > 1,
       [Guards.hasReachedLimit]: context => {
-        const { mode, singleModeTotalSteps, bothModeTotalSteps, step } = context
-        const limit = mode === 'single' ? singleModeTotalSteps : bothModeTotalSteps
+        const { mode, singleModeTotalSteps, normalModeTotalSteps, step } = context
+        const limit = mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps
 
         return step >= limit
       },
       [Guards.hasNotReachedLimit]: context => {
-        const { mode, singleModeTotalSteps, bothModeTotalSteps, step } = context
-        const limit = mode === 'single' ? singleModeTotalSteps : bothModeTotalSteps
+        const { mode, singleModeTotalSteps, normalModeTotalSteps, step } = context
+        const limit = mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps
 
         return step < limit
       },

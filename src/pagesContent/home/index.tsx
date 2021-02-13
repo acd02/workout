@@ -23,7 +23,7 @@ export function RenderHome() {
     if (context.mode === 'single' && context.step === context.singleModeTotalSteps)
       return 60
 
-    return context.mode === 'both sides' ? 60 : 30
+    return context.mode === 'normal' ? 60 : 30
   })()
 
   const mainContent = (

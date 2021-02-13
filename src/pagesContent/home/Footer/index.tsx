@@ -7,8 +7,8 @@ type DisplayBottomInfoProps = {
 }
 
 export function Footer({ state }: DisplayBottomInfoProps) {
-  const { mode, step, singleModeTotalSteps, bothModeTotalSteps } = state.context
-  const totalStep = mode === 'single' ? singleModeTotalSteps : bothModeTotalSteps
+  const { mode, step, singleModeTotalSteps, normalModeTotalSteps } = state.context
+  const totalStep = mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps
   const progress = 100 * ((state.matches('onGoingSet') ? step - 1 : step) / totalStep)
 
   const progressBar = (

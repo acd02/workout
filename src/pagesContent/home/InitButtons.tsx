@@ -18,9 +18,11 @@ export function InitButtons({ send }: Props) {
       />
       <br />
       <Button
-        label="START BOTH SIDES SET"
+        className="w-full"
+        innerBtnClassName="justify-center"
+        label="START SET"
         color="orange"
-        onClick={() => send({ type: 'START_SET', mode: 'both sides' })}
+        onClick={() => send({ type: 'START_SET', mode: 'normal' })}
       />
     </div>
   )
