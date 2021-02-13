@@ -1,5 +1,5 @@
 .root > * {
-  flex-basis: clamp(200px, 50%, 275px);
+  flex-basis: clamp(230px, 50%, 275px);
   flex-grow: 0;
   margin: calc(theme('spacing.4') / 2);
 

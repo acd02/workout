@@ -1,16 +1,17 @@
 import { when } from 'acd-utils'
 import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 
 import styles from './styles.module.css'
 import { setProgress, toIntlNumberFormat } from './utils'
 
 type Props = {
   limit?: number
+  step: number
 }
 
-export function Timer({ limit = 60 }: Props) {
+export const Timer: FC<Props> = ({ limit = 60, step }) => {
   const [elapsedTime, setElapsedTime] = useState(0)
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)
@@ -41,6 +42,10 @@ export function Timer({ limit = 60 }: Props) {
         percent: (elapsedTime / limit) * 100,
       })
   }, [elapsedTime])
+
+  useEffectAfterMount(() => {
+    setElapsedTime(0)
+  }, [step])
 
   const formattedElapsedTime =
     limit < elapsedTime ? (
@@ -77,7 +82,7 @@ export function Timer({ limit = 60 }: Props) {
   )
 
   return (
-    <div className="relative w-64 mx-auto">
+    <div className="md:w-64 relative w-48 mx-auto">
       <svg viewBox="0 0 100 100" className="transform -rotate-90">
         {backgroundCircle}
         {foregroundCircle}

@@ -1,1 +1,1 @@
-export { AnimateSwitch } from './AnimateSwitch'
+export { AnimateSwitchList } from './AnimateSwitchList'

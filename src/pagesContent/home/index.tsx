@@ -1,6 +1,6 @@
 import { useMachine } from '@xstate/react'
 import cx from 'classcat'
-import { AnimateSwitch } from 'components/atoms/Animate'
+import { AnimateSwitchList } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
 import { Timer } from 'components/organisms/Timer'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
@@ -27,27 +27,27 @@ export function RenderHome() {
   })()
 
   const mainContent = (
-    <div className="mb-2">
-      <AnimateSwitch
-        activeKey={matches('inBetweenSteps') ? 1 : 0}
+    <div className="md:h-auto flex items-center h-56 mt-auto mb-2">
+      <AnimateSwitchList
+        shouldAnimateOnMount={true}
+        activeIndex={matches('inBetweenSteps') ? 1 : 0}
         enterClassName={
           isGoingToPrevStep ? 'animate-fade-in-right' : 'animate-fade-in-left'
         }
         exitClassName={
           isGoingToPrevStep ? 'animate-fade-out-left' : 'animate-fade-out-right'
         }
-        timeout={ANIMATION_DURATION}
-        elementsTuple={[
+        duration={ANIMATION_DURATION}
+        items={[
           <UndrawSvg
-            className={`mb-4 max-w-full ${
+            className={`mb-4 max-w-full mx-auto w-4/5 md:w-full ${
               context.speed === 'double time'
                 ? 'animate-heartbeat-double-time'
                 : 'animate-heartbeat'
             }`}
             width={500}
           />,
-
-          <Timer limit={limit} />,
+          <Timer limit={limit} step={context.step} />,
         ]}
       />
     </div>

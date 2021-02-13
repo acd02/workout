@@ -1,7 +1,11 @@
 .root {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr 1fr 1fr;
   height: 100%;
+
+  @media (min-width: theme('screens.md')) {
+    grid-template-rows: auto 1fr auto;
+  }
 }
 
 .header {
