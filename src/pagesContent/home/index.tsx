@@ -2,11 +2,11 @@ import { useMachine } from '@xstate/react'
 import cx from 'classcat'
 import { AnimateSwitchList } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
-import { Timer } from 'components/organisms/Timer'
+import { initialTimerState, Timer, timerReducer } from 'components/organisms/Timer'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
-import React, { useRef } from 'react'
+import React, { useReducer } from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -16,10 +16,10 @@ import { NavigationButtons } from './NavigationButtons'
 const ANIMATION_DURATION = 250
 
 export function RenderHome() {
+  const [timerState, timerDispatch] = useReducer(timerReducer, initialTimerState)
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
   const { matches, context } = state
 
-  const handleResetRef = useRef<() => void>()
   const isGoingToPrevStep = state.event.type === 'PREVIOUS'
   const limit = (() => {
     if (context.mode === 'single' && context.step === context.singleModeTotalSteps)
@@ -29,7 +29,7 @@ export function RenderHome() {
   })()
 
   useEffectAfterMount(() => {
-    handleResetRef.current?.()
+    timerDispatch({ type: 'RESET_ELAPSED_TIME' })
   }, [context.step])
 
   const mainContent = (
@@ -55,7 +55,7 @@ export function RenderHome() {
             width={500}
             height="inherit"
           />,
-          <Timer limit={limit} handleResetRef={handleResetRef} />,
+          <Timer limit={limit} state={timerState} dispatch={timerDispatch} />,
         ]}
       />
     </div>

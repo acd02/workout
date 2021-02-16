@@ -1,23 +1,27 @@
 import { when } from 'acd-utils'
 import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
-import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react'
+import React, { Dispatch, ReactElement, useEffect, useRef } from 'react'
 
+import type { Action, State } from './reducer/types'
 import styles from './styles.module.css'
 import { setProgress, toIntlNumberFormat } from './utils'
 
 type Props = {
+  state: State
+  dispatch: Dispatch<Action>
   limit?: number
-  handleResetRef?: MutableRefObject<(() => void) | undefined>
 }
 
-export const Timer: FC<Props> = ({ limit = 60, handleResetRef }) => {
-  const [elapsedTime, setElapsedTime] = useState(0)
+export { reducer as timerReducer, initialState as initialTimerState } from './reducer'
+
+export const Timer = ({ limit = 60, state, dispatch }: Props): ReactElement => {
+  const { elapsedTime } = state
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)
 
   function incrementElapsedTime() {
-    setElapsedTime(t => (t > 999 ? 0 : t + 1))
+    dispatch({ type: 'INCREMENT_ELAPSED_TIME' })
   }
 
   useEffect(() => {
@@ -32,10 +36,6 @@ export const Timer: FC<Props> = ({ limit = 60, handleResetRef }) => {
     const intervalId = setInterval(incrementElapsedTime, 1000)
 
     return () => clearInterval(intervalId)
-  }, [])
-
-  useEffect(() => {
-    if (handleResetRef) handleResetRef.current = () => setElapsedTime(0)
   }, [])
 
   useEffectAfterMount(() => {
