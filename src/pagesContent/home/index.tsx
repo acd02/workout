@@ -3,9 +3,10 @@ import cx from 'classcat'
 import { AnimateSwitchList } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
 import { Timer } from 'components/organisms/Timer'
+import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
 import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -18,6 +19,7 @@ export function RenderHome() {
   const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
   const { matches, context } = state
 
+  const handleResetRef = useRef<() => void>()
   const isGoingToPrevStep = state.event.type === 'PREVIOUS'
   const limit = (() => {
     if (context.mode === 'single' && context.step === context.singleModeTotalSteps)
@@ -25,6 +27,10 @@ export function RenderHome() {
 
     return context.mode === 'normal' ? 60 : 30
   })()
+
+  useEffectAfterMount(() => {
+    handleResetRef.current?.()
+  }, [context.step])
 
   const mainContent = (
     <div className=" flex items-center justify-center mt-auto mb-2">
@@ -49,7 +55,7 @@ export function RenderHome() {
             width={500}
             height="inherit"
           />,
-          <Timer limit={limit} step={context.step} />,
+          <Timer limit={limit} handleResetRef={handleResetRef} />,
         ]}
       />
     </div>

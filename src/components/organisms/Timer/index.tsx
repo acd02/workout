@@ -1,17 +1,17 @@
 import { when } from 'acd-utils'
 import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react'
 
 import styles from './styles.module.css'
 import { setProgress, toIntlNumberFormat } from './utils'
 
 type Props = {
   limit?: number
-  step: number
+  handleResetRef?: MutableRefObject<(() => void) | undefined>
 }
 
-export const Timer: FC<Props> = ({ limit = 60, step }) => {
+export const Timer: FC<Props> = ({ limit = 60, handleResetRef }) => {
   const [elapsedTime, setElapsedTime] = useState(0)
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)
@@ -34,6 +34,10 @@ export const Timer: FC<Props> = ({ limit = 60, step }) => {
     return () => clearInterval(intervalId)
   }, [])
 
+  useEffect(() => {
+    if (handleResetRef) handleResetRef.current = () => setElapsedTime(0)
+  }, [])
+
   useEffectAfterMount(() => {
     elapsedTime <= limit &&
       setProgress({
@@ -42,10 +46,6 @@ export const Timer: FC<Props> = ({ limit = 60, step }) => {
         percent: (elapsedTime / limit) * 100,
       })
   }, [elapsedTime])
-
-  useEffectAfterMount(() => {
-    setElapsedTime(0)
-  }, [step])
 
   const formattedElapsedTime =
     limit < elapsedTime ? (
