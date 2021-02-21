@@ -1,20 +1,18 @@
 import cx from 'classcat'
 import { Button } from 'components/atoms/Button'
-import { WorkoutContext, WorkoutEvent } from 'machines/workout'
+import type { Context, Send, State } from 'machines/workout'
 import React from 'react'
-import { Interpreter, State } from 'xstate'
 
-import { getNextStepLabel } from '../utils'
 import styles from './styles.module.css'
+import { getNextStepLabel } from './utils'
 
 type Props = {
-  state: State<WorkoutContext, WorkoutEvent>
-  send: Interpreter<WorkoutContext, UnknownObj, WorkoutEvent>['send']
+  context: Context
+  currentState: keyof State
+  send: Send
 }
 
-export function NavigationButtons({ send, state }: Props) {
-  const { matches, context } = state
-
+export function NavigationButtons({ send, context, currentState }: Props) {
   return (
     <div
       className={cx([
@@ -24,17 +22,17 @@ export function NavigationButtons({ send, state }: Props) {
     >
       <Button
         outline
-        disabled={matches('onGoingSet') && context.step === 1}
+        disabled={currentState === 'onGoingSet' && context.step === 1}
         innerBtnClassName="justify-center"
         label="PREVIOUS"
         color="orange"
-        onClick={() => send('PREVIOUS')}
+        onClick={() => send({ type: 'PREVIOUS' })}
       />
       <Button
         innerBtnClassName="justify-center"
-        label={getNextStepLabel(state)}
+        label={getNextStepLabel({ currentState, context })}
         color="orange"
-        onClick={() => send('NEXT')}
+        onClick={() => send({ type: 'NEXT' })}
       />
     </div>
   )

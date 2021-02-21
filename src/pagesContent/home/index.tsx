@@ -1,81 +1,48 @@
-import { useMachine } from '@xstate/react'
 import cx from 'classcat'
-import { AnimateSwitchList } from 'components/atoms/Animate'
 import { MainLayout } from 'components/layouts/Main'
-import { initialTimerState, Timer, timerReducer } from 'components/organisms/Timer'
-import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
-import { UndrawSvg } from 'illustrations/UndrawSvg'
-import { WorkoutContext, WorkoutEvent, workoutMachine } from 'machines/workout'
-import React, { useReducer } from 'react'
+import type { Send } from 'machines/workout'
+import { workoutMachine } from 'machines/workout'
+import React, { useEffect, useState } from 'react'
+import { createUseMachine } from 'robot-hooks'
 
-import { Footer } from './Footer'
-import { Header } from './Header'
-import { InitButtons } from './InitButtons'
-import { NavigationButtons } from './NavigationButtons'
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
+import { InitButtons } from './components/InitButtons'
+import { Main } from './components/Main'
+import { NavigationButtons } from './components/NavigationButtons'
 
-const ANIMATION_DURATION = 250
+const useMachine = createUseMachine(useEffect, useState)
 
 export function RenderHome() {
-  const [timerState, timerDispatch] = useReducer(timerReducer, initialTimerState)
-  const [state, send] = useMachine<WorkoutContext, WorkoutEvent>(workoutMachine)
-  const { matches, context } = state
-
-  const isGoingToPrevStep = state.event.type === 'PREVIOUS'
-  const limit = (() => {
-    if (context.mode === 'single' && context.step === context.singleModeTotalSteps)
-      return 60
-
-    return context.mode === 'normal' ? 60 : 30
-  })()
-
-  useEffectAfterMount(() => {
-    timerDispatch({ type: 'RESET_ELAPSED_TIME' })
-  }, [context.step])
-
-  const mainContent = (
-    <div className=" flex items-center justify-center mt-auto mb-2">
-      <AnimateSwitchList
-        shouldAnimateOnMount={true}
-        activeIndex={matches('inBetweenSteps') ? 1 : 0}
-        className="md:h-auto md:w-full w-4/5 h-48"
-        enterClassName={
-          isGoingToPrevStep ? 'animate-fade-in-right' : 'animate-fade-in-left'
-        }
-        exitClassName={
-          isGoingToPrevStep ? 'animate-fade-out-left' : 'animate-fade-out-right'
-        }
-        duration={ANIMATION_DURATION}
-        items={[
-          <UndrawSvg
-            className={`mb-4 max-w-full mx-auto ${
-              context.speed === 'double time'
-                ? 'animate-heartbeat-double-time'
-                : 'animate-heartbeat'
-            }`}
-            width={500}
-            height="inherit"
-          />,
-          <Timer limit={limit} state={timerState} dispatch={timerDispatch} />,
-        ]}
-      />
-    </div>
-  )
+  const [state, untypedSend] = useMachine(workoutMachine)
+  const send: Send = untypedSend
+  const { context, name: currentState } = state
 
   return (
     <MainLayout
       title="workout"
       description="workout"
-      header={!matches('idle') && <Header context={context} />}
-      footer={!matches('idle') && <Footer state={state} />}
+      header={currentState !== 'idle' && <Header context={context} />}
+      footer={
+        currentState !== 'idle' && (
+          <Footer context={context} currentState={currentState} />
+        )
+      }
     >
       <div
         className={cx([
           'flex flex-wrap items-center justify-center px-6',
-          matches('idle') && 'row-span-3',
+          currentState === 'idle' && 'row-span-3',
         ])}
       >
-        {state.matches('idle') ? <InitButtons send={send} /> : mainContent}
-        {!matches('idle') && <NavigationButtons send={send} state={state} />}
+        {currentState === 'idle' ? (
+          <InitButtons send={send} />
+        ) : (
+          <Main context={context} currentState={currentState} />
+        )}
+        {currentState !== 'idle' && (
+          <NavigationButtons context={context} send={send} currentState={currentState} />
+        )}
       </div>
     </MainLayout>
   )

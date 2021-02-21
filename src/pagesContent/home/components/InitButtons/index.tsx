@@ -1,10 +1,9 @@
 import { Button } from 'components/atoms/Button'
-import { WorkoutContext, WorkoutEvent } from 'machines/workout'
+import type { Send } from 'machines/workout'
 import React from 'react'
-import { Interpreter } from 'xstate'
 
 type Props = {
-  send: Interpreter<WorkoutContext, UnknownObj, WorkoutEvent>['send']
+  send: Send
 }
 
 export function InitButtons({ send }: Props) {

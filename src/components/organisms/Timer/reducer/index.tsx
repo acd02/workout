@@ -23,7 +23,7 @@ function reducer(state: State, action: Action): State {
 }
 
 const initialState: State = {
-  elapsedTime: 20,
+  elapsedTime: 0,
 }
 
 export { reducer, initialState }
