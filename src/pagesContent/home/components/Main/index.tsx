@@ -32,7 +32,7 @@ export function Main({ context, currentState }: Props) {
       <AnimateSwitchList
         shouldAnimateOnMount={true}
         activeIndex={currentState === 'inBetweenSteps' ? 1 : 0}
-        className="md:h-auto md:w-full w-4/5 h-48"
+        className="md:h-auto h-48"
         enterClassName={
           isGoingBackwards ? 'animate-fade-in-left' : 'animate-fade-in-right'
         }
