@@ -15,7 +15,7 @@ type Props = {
 
 export { reducer as timerReducer, initialState as initialTimerState } from './reducer'
 
-export const Timer = ({ limit = 60, state, dispatch }: Props): ReactElement => {
+export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
   const { elapsedTime } = state
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)

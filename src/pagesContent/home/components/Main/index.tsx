@@ -1,4 +1,4 @@
-import { AnimateSwitchList } from 'components/atoms/Animate'
+import { AnimateSwitch } from 'components/atoms/Animate'
 import { initialTimerState, Timer, timerReducer } from 'components/organisms/Timer'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
@@ -29,7 +29,7 @@ export function Main({ context, currentState }: Props) {
 
   return (
     <div className=" flex items-center justify-center mt-auto mb-2">
-      <AnimateSwitchList
+      <AnimateSwitch
         shouldAnimateOnMount={true}
         activeIndex={currentState === 'inBetweenSteps' ? 1 : 0}
         className="md:h-auto h-48"
@@ -40,19 +40,18 @@ export function Main({ context, currentState }: Props) {
           isGoingBackwards ? 'animate-fade-out-right' : 'animate-fade-out-left'
         }
         duration={ANIMATION_DURATION}
-        items={[
-          <UndrawSvg
-            className={`mb-4 max-w-full mx-auto ${
-              speed === 'double time'
-                ? 'animate-heartbeat-double-time'
-                : 'animate-heartbeat'
-            }`}
-            width={500}
-            height="inherit"
-          />,
-          <Timer limit={limit} state={timerState} dispatch={timerDispatch} />,
-        ]}
-      />
+      >
+        <UndrawSvg
+          className={`mb-4 max-w-full mx-auto ${
+            speed === 'double time'
+              ? 'animate-heartbeat-double-time'
+              : 'animate-heartbeat'
+          }`}
+          width={500}
+          height="inherit"
+        />
+        <Timer limit={limit} state={timerState} dispatch={timerDispatch} />
+      </AnimateSwitch>
     </div>
   )
 }

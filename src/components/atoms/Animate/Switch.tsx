@@ -5,7 +5,7 @@ import { SwitchTransition, Transition } from 'react-transition-group'
 import { makeClassNameMapper } from './utils'
 
 type Props = {
-  items: ReactNode[]
+  children: ReactNode[]
   activeIndex: number
   duration?: number
   shouldAnimateOnMount?: boolean
@@ -14,15 +14,16 @@ type Props = {
   className?: string
 }
 
-const AnimateSwitchList = ({
+function AnimateSwitch({
   activeIndex,
   enterClassName,
   exitClassName,
   className,
-  items,
+  children: childrenProp,
   duration = 250,
   shouldAnimateOnMount,
-}: Props): ReactElement => {
+}: Props): ReactElement {
+  const children = Array.isArray(childrenProp) ? [...childrenProp] : [childrenProp]
   /*
     we use a ref here, because passing a dynamic value for the "exitClassName" prop
     will cause a desynchronization for one render (when exiting) everytime it changes
@@ -41,7 +42,7 @@ const AnimateSwitchList = ({
 
           return (
             <div className={cx([classNameMapper[transitionStatus], className])}>
-              {items[activeIndex]}
+              {children[activeIndex]}
             </div>
           )
         }}
@@ -50,4 +51,4 @@ const AnimateSwitchList = ({
   )
 }
 
-export { AnimateSwitchList }
+export { AnimateSwitch }
