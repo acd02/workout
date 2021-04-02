@@ -25,13 +25,11 @@ export function NavigationButtons({ send, context, currentState }: Props) {
         disabled={currentState === 'onGoingSet' && context.step === 1}
         innerBtnClassName="justify-center"
         label="PREVIOUS"
-        color="orange"
         onClick={() => send({ type: 'PREVIOUS' })}
       />
       <Button
         innerBtnClassName="justify-center"
         label={getNextStepLabel({ currentState, context })}
-        color="orange"
         onClick={() => send({ type: 'NEXT' })}
       />
     </div>

@@ -11,7 +11,6 @@ export function InitButtons({ send }: Props) {
     <div className="animate-fade-in">
       <Button
         label="START SINGLE SIDE SET"
-        color="orange"
         className="mb-4"
         onClick={() => send({ type: 'START_SET', mode: 'single' })}
       />
@@ -20,7 +19,6 @@ export function InitButtons({ send }: Props) {
         className="w-full"
         innerBtnClassName="justify-center"
         label="START SET"
-        color="orange"
         onClick={() => send({ type: 'START_SET', mode: 'normal' })}
       />
     </div>
