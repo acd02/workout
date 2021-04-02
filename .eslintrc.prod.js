@@ -1,13 +1,18 @@
 module.exports = {
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   plugins: ['@typescript-eslint', 'react-hooks', 'fp', 'simple-import-sort'],
   extends: [
     'standard',
     'plugin:fp/recommended',
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
     'plugin:react/recommended',
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'prettier',
   ],
   globals: {
     fetch: 'readonly',
@@ -26,17 +31,17 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/prefer-interface': 0,
     '@typescript-eslint/no-object-literal-type-assertion': 0,
-    "@typescript-eslint/no-shadow": 2,
+    '@typescript-eslint/no-shadow': 2,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/no-use-before-define': [
       2,
-      { functions: false, classes: true, variables: true },
+      { functions: false, classes: true, variables: false },
     ],
-    '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/switch-exhaustiveness-check': 2,
     // React
     'jsx-quotes': [2, 'prefer-double'],
+    'react/react-in-jsx-scope': 0,
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 1,
     'react/prop-types': 0,
@@ -46,7 +51,11 @@ module.exports = {
     'fp/no-mutation': [
       2,
       {
-        exceptions: [{ property: 'getInitialProps' }, { property: 'current' }],
+        exceptions: [
+          { property: 'getInitialProps' },
+          { property: 'current' },
+          { property: 'getLayout' },
+        ],
       },
     ],
     'fp/no-nil': 'off',
@@ -68,6 +77,7 @@ module.exports = {
     'newline-before-return': 2,
     'no-console': ['error', { allow: ['error'] }],
     'no-debugger': 2,
+    'no-nested-ternary': 2,
     'no-shadow': 0,
     'no-unused-expressions': [2, { allowShortCircuit: true }],
     'no-use-before-define': 0,

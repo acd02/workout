@@ -1,4 +1,4 @@
-import { when } from 'acd-utils'
+import { maybe } from 'acd-utils'
 import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { Dispatch, ReactElement, useEffect, useRef } from 'react'
@@ -25,7 +25,7 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
   }
 
   useEffect(() => {
-    when(circleRef.current).map(circle => {
+    maybe(circleRef.current).map(circle => {
       const radius = circle.r.baseVal.value
       circumferenceRef.current = radius * 2 * Math.PI
 

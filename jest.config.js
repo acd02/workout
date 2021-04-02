@@ -47,7 +47,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       babelConfig: true,
-      tsConfig: '<rootDir>/tsconfig.jest.json',
+      tsconfig: '<rootDir>/tsconfig.jest.json',
     },
   },
   setupFilesAfterEnv: ['<rootDir>/jest/setupAfterEnv.ts'],
