@@ -17,11 +17,11 @@ export function Main({ context, currentState }: Props) {
   const [timerState, timerDispatch] = useReducer(timerReducer, initialTimerState)
 
   const isGoingBackwards = navigation === 'backwards'
-  const limit = (() => {
+  const getLimit = () => {
     if (mode === 'single' && step === singleModeTotalSteps) return 60
 
     return mode === 'normal' ? 60 : 30
-  })()
+  }
 
   useEffectAfterMount(() => {
     timerDispatch({ type: 'RESET_ELAPSED_TIME' })
@@ -50,7 +50,7 @@ export function Main({ context, currentState }: Props) {
           width={500}
           height="inherit"
         />
-        <Timer limit={limit} state={timerState} dispatch={timerDispatch} />
+        <Timer limit={getLimit()} state={timerState} dispatch={timerDispatch} />
       </AnimateSwitch>
     </div>
   )

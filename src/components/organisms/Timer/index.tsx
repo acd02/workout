@@ -1,11 +1,10 @@
-import { maybe } from 'acd-utils'
 import cx from 'classcat'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { Dispatch, ReactElement, useEffect, useRef } from 'react'
 
 import type { Action, State } from './reducer/types'
 import styles from './styles.module.css'
-import { setProgress, toIntlNumberFormat } from './utils'
+import { getOffsetValue, toIntlNumberFormat } from './utils'
 
 type Props = {
   state: State
@@ -19,32 +18,36 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
   const { elapsedTime } = state
   const circleRef = useRef<SVGCircleElement>(null)
   const circumferenceRef = useRef(0)
+  const timeoutIdRef = useRef<NodeJS.Timeout>()
 
   function incrementElapsedTime() {
-    dispatch({ type: 'INCREMENT_ELAPSED_TIME' })
+    timeoutIdRef.current = setTimeout(() => {
+      dispatch({ type: 'INCREMENT_ELAPSED_TIME' })
+      incrementElapsedTime()
+    }, 1000)
   }
 
   useEffect(() => {
-    maybe(circleRef.current).map(circle => {
-      const radius = circle.r.baseVal.value
-      circumferenceRef.current = radius * 2 * Math.PI
+    if (!circleRef.current) return
 
-      /* eslint-disable-next-line fp/no-mutation */
-      circle.style.strokeDasharray = `${circumferenceRef.current} ${circumferenceRef.current}`
-    })
+    const radius = circleRef.current.r.baseVal.value
+    circumferenceRef.current = radius * 2 * Math.PI
 
-    const intervalId = setInterval(incrementElapsedTime, 1000)
+    /* eslint-disable-next-line fp/no-mutation */
+    circleRef.current.style.strokeDasharray = `${circumferenceRef.current} ${circumferenceRef.current}`
 
-    return () => clearInterval(intervalId)
+    incrementElapsedTime()
+
+    return () => clearTimeout(timeoutIdRef.current!)
   }, [])
 
   useEffectAfterMount(() => {
-    elapsedTime <= limit &&
-      setProgress({
-        circle: circleRef.current,
-        circumference: circumferenceRef.current,
-        percent: (elapsedTime / limit) * 100,
-      })
+    if (!circleRef.current || elapsedTime > limit) return
+
+    circleRef.current.style.strokeDashoffset = getOffsetValue({
+      circumference: circumferenceRef.current,
+      percent: (elapsedTime / limit) * 100,
+    })
   }, [elapsedTime])
 
   const formattedElapsedTime =
@@ -56,15 +59,18 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
       toIntlNumberFormat(limit - elapsedTime)
     )
 
+  const circleAttrs = {
+    fill: 'transparent',
+    r: '48',
+    cx: '50',
+    cy: '50',
+    strokeWidth: 2,
+  }
+
   const backgroundCircle = (
     <circle
       className={cx([styles.backgroundCircle, elapsedTime > limit && styles.isOverLimit])}
-      strokeWidth="2"
-      stroke="blue"
-      fill="transparent"
-      r="48"
-      cx="50"
-      cy="50"
+      {...circleAttrs}
     />
   )
 
@@ -72,12 +78,8 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
     <circle
       ref={circleRef}
       className={styles.foregroundCircle}
-      strokeWidth="2"
       strokeLinecap="round"
-      fill="transparent"
-      r="48"
-      cx="50"
-      cy="50"
+      {...circleAttrs}
     />
   )
 

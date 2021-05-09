@@ -28,7 +28,7 @@ function AnimateSwitch({
     we use a ref here, because passing a dynamic value for the "exitClassName" prop
     will cause a desynchronization for one render (when exiting) everytime it changes
   */
-  const exitClassNameRef = useRef<string | undefined>()
+  const exitClassNameRef = useRef<string>()
   exitClassNameRef.current = exitClassName
 
   return (

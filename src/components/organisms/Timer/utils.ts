@@ -5,16 +5,15 @@ function toIntlNumberFormat(value: number): string {
   }).format(value)
 }
 
-type SetProgressArgs = {
+type GetOffsetValueArgs = {
   percent: number
   circumference: number
-  circle: SVGCircleElement | null
 }
 
-function setProgress({ percent, circumference, circle }: SetProgressArgs) {
+function getOffsetValue({ percent, circumference }: GetOffsetValueArgs): string {
   const offset = circumference - (percent / 100) * circumference
-  /* eslint-disable-next-line fp/no-mutation */
-  if (circle) circle.style.strokeDashoffset = `${circumference - offset}`
+
+  return `${circumference - offset}`
 }
 
-export { toIntlNumberFormat, setProgress }
+export { toIntlNumberFormat, getOffsetValue }

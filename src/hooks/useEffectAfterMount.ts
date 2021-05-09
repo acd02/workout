@@ -18,5 +18,6 @@ export function useEffectAfterMount(
     isInitialMount.current = false
 
     return () => cleanup?.()
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, deps || [])
 }
