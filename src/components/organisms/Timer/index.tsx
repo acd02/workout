@@ -33,7 +33,6 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
     const radius = circleRef.current.r.baseVal.value
     circumferenceRef.current = radius * 2 * Math.PI
 
-    /* eslint-disable-next-line fp/no-mutation */
     circleRef.current.style.strokeDasharray = `${circumferenceRef.current} ${circumferenceRef.current}`
 
     incrementElapsedTime()

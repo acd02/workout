@@ -14,7 +14,6 @@ export function useEffectAfterMount(
   useEffect(() => {
     if (!isInitialMount.current) func()
 
-    /* eslint-disable-next-line fp/no-mutation */
     isInitialMount.current = false
 
     return () => cleanup?.()
