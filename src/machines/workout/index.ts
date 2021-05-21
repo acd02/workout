@@ -1,9 +1,22 @@
-import { createMachine, guard, immediate, reduce, state, transition } from 'robot3'
+import {
+  createMachine,
+  guard as untypedGuard,
+  immediate,
+  reduce as untypedReduce,
+  state,
+  transition,
+} from 'robot3'
+import type { Guard, Reducer, ReduceFunction, GuardFunction } from 'robot3'
 
-import { $events, $state } from './enums'
-import { hasNotReachedLimit, hasReachedLimit, isNotFirstStep } from './guards'
+import { EVENTS, STATE } from './constants'
+import { hasReachedLimit, isNotFirstStep } from './guards'
 import { reducers } from './reducers'
 import type { Context, Events, Send, State } from './types'
+
+const guard: (fn: GuardFunction<Context, Events>) => Guard<Context, Events> = untypedGuard
+const reduce: (
+  fn: ReduceFunction<Context, Events>
+) => Reducer<Context, Events> = untypedReduce
 
 const context = (): Context => ({
   step: 0,
@@ -14,37 +27,37 @@ const context = (): Context => ({
 
 const workoutMachine = createMachine<State, Context>(
   {
-    idle: state(transition($events.START_SET, $state.initSet)),
-    initSet: state(immediate($state.onGoingSet, reduce(reducers.initSet))),
+    idle: state(transition(EVENTS.START_SET, STATE.initSet)),
+    initSet: state(immediate(STATE.onGoingSet, reduce(reducers.initSet))),
     onGoingSet: state(
       transition(
-        $events.PREVIOUS,
-        $state.inBetweenSteps,
+        EVENTS.PREVIOUS,
+        STATE.inBetweenSteps,
         guard(isNotFirstStep),
         reduce(reducers.decrementStep)
       ),
       transition(
-        $events.NEXT,
-        $state.inBetweenSteps,
-        reduce<Context, Events>(ctx => reducers.updateDirectionStatus(ctx, 'forwards'))
+        EVENTS.NEXT,
+        STATE.inBetweenSteps,
+        reduce(ctx => reducers.updateDirectionStatus(ctx, 'forwards'))
       )
     ),
     inBetweenSteps: state(
       transition(
-        $events.PREVIOUS,
-        $state.onGoingSet,
-        reduce<Context, Events>(ctx => reducers.updateDirectionStatus(ctx, 'backwards'))
+        EVENTS.PREVIOUS,
+        STATE.onGoingSet,
+        reduce(ctx => reducers.updateDirectionStatus(ctx, 'backwards'))
       ),
       transition(
-        $events.NEXT,
-        $state.idle,
+        EVENTS.NEXT,
+        STATE.idle,
         guard(hasReachedLimit),
         reduce(reducers.finishSet)
       ),
       transition(
-        $events.NEXT,
-        $state.onGoingSet,
-        guard(hasNotReachedLimit),
+        EVENTS.NEXT,
+        STATE.onGoingSet,
+        guard(ctx => !hasReachedLimit(ctx)),
         reduce(reducers.incrementStep)
       )
     ),

@@ -14,15 +14,4 @@ function hasReachedLimit({
   return step >= limit
 }
 
-function hasNotReachedLimit({
-  mode,
-  singleModeTotalSteps,
-  normalModeTotalSteps,
-  step,
-}: Context) {
-  const limit = mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps
-
-  return step < limit
-}
-
-export { isNotFirstStep, hasReachedLimit, hasNotReachedLimit }
+export { isNotFirstStep, hasReachedLimit }
