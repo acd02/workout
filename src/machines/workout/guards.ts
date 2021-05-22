@@ -1,4 +1,5 @@
 import { Context } from './types'
+
 function isNotFirstStep({ step }: Context) {
   return step > 1
 }
