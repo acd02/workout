@@ -1,3 +1,4 @@
+import type { Guard, GuardFunction, ReduceFunction, Reducer } from 'robot3'
 import {
   createMachine,
   guard as untypedGuard,
@@ -6,7 +7,6 @@ import {
   state,
   transition,
 } from 'robot3'
-import type { Guard, Reducer, ReduceFunction, GuardFunction } from 'robot3'
 
 import { EVENTS, STATE } from './constants'
 import { hasReachedLimit, isNotFirstStep } from './guards'

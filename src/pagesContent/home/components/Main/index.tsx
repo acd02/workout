@@ -19,6 +19,7 @@ export function Main({ context, currentState }: Props) {
   const isGoingBackwards = navigation === 'backwards'
   const limit = (() => {
     if (mode === 'single' && step === singleModeTotalSteps) return 60
+
     return mode === 'normal' ? 60 : 30
   })()
 
