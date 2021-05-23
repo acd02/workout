@@ -55,3 +55,5 @@ export function Main({ context, currentState }: Props) {
     </div>
   )
 }
+
+export type { Props }

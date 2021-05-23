@@ -2,14 +2,19 @@ import cx from 'classcat'
 import { MainLayout } from 'components/layouts/Main'
 import type { Send } from 'machines/workout'
 import { workoutMachine } from 'machines/workout'
+import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
 import { createUseMachine } from 'robot-hooks'
 
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { InitButtons } from './components/InitButtons'
-import { Main } from './components/Main'
+import type { Props as MainProps } from './components/Main'
 import { NavigationButtons } from './components/NavigationButtons'
+
+const DynamicMain = dynamic<MainProps>(() =>
+  import('./components/Main').then(mod => mod.Main)
+)
 
 const useMachine = createUseMachine(useEffect, useState)
 
@@ -38,7 +43,7 @@ export function RenderHome() {
         {currentState === 'idle' ? (
           <InitButtons send={send} />
         ) : (
-          <Main context={context} currentState={currentState} />
+          <DynamicMain context={context} currentState={currentState} />
         )}
         {currentState !== 'idle' && (
           <NavigationButtons context={context} send={send} currentState={currentState} />
