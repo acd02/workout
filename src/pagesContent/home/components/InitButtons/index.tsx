@@ -1,9 +1,9 @@
 import { Button } from 'components/atoms/Button'
-import type { Send } from 'machines/workout'
+import type { WorkoutMachineSend } from 'machines/workout/types'
 import React from 'react'
 
 type Props = {
-  send: Send
+  send: WorkoutMachineSend
 }
 
 export function InitButtons({ send }: Props) {
