@@ -2,7 +2,7 @@
 
 Made with:
 - [Next.js](https://nextjs.org/)
-- [Robot (finite State Machine library)](https://thisrobot.life/)
+- [XState (finite State Machine library)](https://xstate.js.org/docs/packages/xstate-fsm/#features)
 
 ## Usage:
 
