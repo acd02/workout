@@ -1,9 +1,9 @@
 import { Badge } from 'components/atoms/Badge'
-import { Context } from 'machines/workout'
+import type { WorkoutContext } from 'machines/workout/types'
 import React from 'react'
 
 type Props = {
-  context: Context
+  context: WorkoutContext
 }
 
 export function Header({ context }: Props) {

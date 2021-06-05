@@ -1,24 +1,51 @@
-import type { SendFunction } from 'robot3'
+import type { StateMachine } from '@xstate/fsm'
 
-/* eslint-disable */
-type State = { idle: {}; initSet: {}; onGoingSet: {}; inBetweenSteps: {} }
-/* eslint-enable */
+type WorkoutState =
+  | {
+      value: 'idle'
+      context: WorkoutContext
+    }
+  | {
+      value: 'onGoingSet'
+      context: WorkoutContext
+    }
+  | {
+      value: 'inBetweenSteps'
+      context: WorkoutContext
+    }
 
 type Mode = 'normal' | 'single'
 type Speed = 'normal' | 'double time'
 type Navigation = 'forwards' | 'backwards'
 
-type Context = {
+// The events that the machine handles
+type WorkoutEvent =
+  | { type: 'START_SET'; mode: Mode }
+  | { type: 'SET_SPEED'; speed: Speed }
+  | { type: 'NEXT' }
+  | { type: 'PREVIOUS' }
+
+// The context (extended state) of the machine
+type WorkoutContext = {
   step: number
   mode?: Mode
   speed?: Speed
-  navigation?: Navigation
   singleModeTotalSteps: number
   normalModeTotalSteps: number
+  navigation?: Navigation
 }
 
-type Events = { type: 'START_SET'; mode: Mode } | { type: 'NEXT' } | { type: 'PREVIOUS' }
+type WorkoutMachineState = StateMachine.State<WorkoutContext, WorkoutEvent, WorkoutState>
+type WorkoutMachineSend = StateMachine.Service<
+  WorkoutContext,
+  WorkoutEvent,
+  WorkoutState
+>['send']
 
-type Send = SendFunction<Events>
-
-export type { State, Context, Events, Mode, Speed, Navigation, Send }
+export type {
+  WorkoutState,
+  WorkoutContext,
+  WorkoutEvent,
+  WorkoutMachineState,
+  WorkoutMachineSend,
+}

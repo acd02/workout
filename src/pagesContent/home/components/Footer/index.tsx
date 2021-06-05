@@ -1,15 +1,15 @@
-import type { Context, State } from 'machines/workout'
+import { StateMachine } from '@xstate/fsm'
+import type { WorkoutContext, WorkoutEvent, WorkoutState } from 'machines/workout/types'
 import React from 'react'
 
-type DisplayBottomInfoProps = {
-  context: Context
-  currentState: keyof State
+type Props = {
+  machineState: StateMachine.State<WorkoutContext, WorkoutEvent, WorkoutState>
 }
 
-export function Footer({ currentState, context }: DisplayBottomInfoProps) {
+export function Footer({ machineState: { context, matches } }: Props) {
   const { mode, step, singleModeTotalSteps, normalModeTotalSteps } = context
   const totalStep = mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps
-  const progress = 100 * ((currentState === 'onGoingSet' ? step - 1 : step) / totalStep)
+  const progress = 100 * ((matches('onGoingSet') ? step - 1 : step) / totalStep)
 
   const progressBar = (
     <div className="md:mb-8 flex w-1/2 h-2 mx-auto mb-4 overflow-hidden text-xs bg-orange-200 rounded">

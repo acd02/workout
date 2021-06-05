@@ -1,69 +1,58 @@
-import type { Guard, GuardFunction, ReduceFunction, Reducer } from 'robot3'
-import {
-  createMachine,
-  guard as untypedGuard,
-  immediate,
-  reduce as untypedReduce,
-  state,
-  transition,
-} from 'robot3'
+import { createMachine } from '@xstate/fsm'
 
-import { EVENTS, STATE } from './constants'
-import { hasReachedLimit, isNotFirstStep } from './guards'
-import { reducers } from './reducers'
-import type { Context, Events, Send, State } from './types'
+import { Actions, actions } from './actions'
+import { guards } from './guards'
+import type { WorkoutContext, WorkoutEvent, WorkoutState } from './types'
 
-const guard: (fn: GuardFunction<Context, Events>) => Guard<Context, Events> = untypedGuard
-const reduce: (
-  fn: ReduceFunction<Context, Events>
-) => Reducer<Context, Events> = untypedReduce
-
-const context = (): Context => ({
-  step: 0,
-  singleModeTotalSteps: 8,
-  normalModeTotalSteps: 4,
-  navigation: 'forwards',
-})
-
-const workoutMachine = createMachine<State, Context>(
+const workoutMachine = createMachine<WorkoutContext, WorkoutEvent, WorkoutState>(
   {
-    idle: state(transition(EVENTS.START_SET, STATE.initSet)),
-    initSet: state(immediate(STATE.onGoingSet, reduce(reducers.initSet))),
-    onGoingSet: state(
-      transition(
-        EVENTS.PREVIOUS,
-        STATE.inBetweenSteps,
-        guard(isNotFirstStep),
-        reduce(reducers.decrementStep)
-      ),
-      transition(
-        EVENTS.NEXT,
-        STATE.inBetweenSteps,
-        reduce(ctx => reducers.updateDirectionStatus(ctx, 'forwards'))
-      )
-    ),
-    inBetweenSteps: state(
-      transition(
-        EVENTS.PREVIOUS,
-        STATE.onGoingSet,
-        reduce(ctx => reducers.updateDirectionStatus(ctx, 'backwards'))
-      ),
-      transition(
-        EVENTS.NEXT,
-        STATE.idle,
-        guard(hasReachedLimit),
-        reduce(reducers.finishSet)
-      ),
-      transition(
-        EVENTS.NEXT,
-        STATE.onGoingSet,
-        guard(ctx => !hasReachedLimit(ctx)),
-        reduce(reducers.incrementStep)
-      )
-    ),
+    initial: 'idle',
+    context: { step: 0, singleModeTotalSteps: 8, normalModeTotalSteps: 4 },
+    states: {
+      idle: {
+        on: {
+          START_SET: {
+            actions: [Actions.setMode, Actions.setSpeed],
+            target: 'onGoingSet',
+          },
+        },
+      },
+      onGoingSet: {
+        entry: [Actions.incrementStep, Actions.setSpeed, Actions.setNavigation],
+        on: {
+          NEXT: 'inBetweenSteps',
+          PREVIOUS: {
+            actions: [Actions.decrementStep],
+            target: 'inBetweenSteps',
+            cond: ({ step }) => step > 1,
+          },
+        },
+      },
+      inBetweenSteps: {
+        entry: [Actions.setNavigation],
+        on: {
+          PREVIOUS: {
+            actions: [Actions.decrementStep, Actions.setNavigation],
+            target: 'onGoingSet',
+          },
+          NEXT: [
+            {
+              target: 'idle',
+              cond: guards.hasReachedLimit,
+              actions: [Actions.resetContext],
+            },
+            {
+              target: 'onGoingSet',
+            },
+          ],
+        },
+      },
+    },
   },
-  context
+  {
+    actions,
+  }
 )
 
-export type { Context, State, Events, Send }
+export type { WorkoutEvent, WorkoutContext }
 export { workoutMachine }

@@ -1,10 +1,10 @@
+import { useMachine } from '@xstate/react/fsm'
 import cx from 'classcat'
 import { MainLayout } from 'components/layouts/Main'
-import type { Send } from 'machines/workout'
 import { workoutMachine } from 'machines/workout'
+import type { WorkoutContext, WorkoutEvent, WorkoutState } from 'machines/workout/types'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
-import { createUseMachine } from 'robot-hooks'
+import React from 'react'
 
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -16,37 +16,33 @@ const DynamicMain = dynamic<MainProps>(() =>
   import('./components/Main').then(mod => mod.Main)
 )
 
-const useMachine = createUseMachine(useEffect, useState)
-
 export function RenderHome() {
-  const [state, untypedSend] = useMachine(workoutMachine)
-  const send: Send = untypedSend
-  const { context, name: currentState } = state
+  const [machineState, send] = useMachine<WorkoutContext, WorkoutEvent, WorkoutState>(
+    workoutMachine
+  )
+
+  const { context } = machineState
 
   return (
     <MainLayout
       title="workout"
       description="workout"
-      header={currentState !== 'idle' && <Header context={context} />}
-      footer={
-        currentState !== 'idle' && (
-          <Footer context={context} currentState={currentState} />
-        )
-      }
+      header={!machineState.matches('idle') && <Header context={context} />}
+      footer={!machineState.matches('idle') && <Footer machineState={machineState} />}
     >
       <div
         className={cx([
           'flex flex-wrap items-center justify-center px-6',
-          currentState === 'idle' && 'row-span-3',
+          machineState.matches('idle') && 'row-span-3',
         ])}
       >
-        {currentState === 'idle' ? (
+        {machineState.matches('idle') ? (
           <InitButtons send={send} />
         ) : (
-          <DynamicMain context={context} currentState={currentState} />
+          <DynamicMain machineState={machineState} />
         )}
-        {currentState !== 'idle' && (
-          <NavigationButtons context={context} send={send} currentState={currentState} />
+        {!machineState.matches('idle') && (
+          <NavigationButtons machineState={machineState} send={send} />
         )}
       </div>
     </MainLayout>

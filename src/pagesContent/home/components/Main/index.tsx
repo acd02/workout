@@ -2,17 +2,17 @@ import { AnimateSwitch } from 'components/atoms/Animate'
 import { initialTimerState, Timer, timerReducer } from 'components/organisms/Timer'
 import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import { UndrawSvg } from 'illustrations/UndrawSvg'
-import type { Context, State } from 'machines/workout'
+import type { WorkoutMachineState } from 'machines/workout/types'
 import React, { useReducer } from 'react'
 
 const ANIMATION_DURATION = 250
 
 type Props = {
-  context: Context
-  currentState: keyof State
+  machineState: WorkoutMachineState
 }
 
-export function Main({ context, currentState }: Props) {
+export function Main({ machineState }: Props) {
+  const { context, matches } = machineState
   const { mode, navigation, step, singleModeTotalSteps, speed } = context
   const [timerState, timerDispatch] = useReducer(timerReducer, initialTimerState)
 
@@ -25,13 +25,13 @@ export function Main({ context, currentState }: Props) {
 
   useEffectAfterMount(() => {
     timerDispatch({ type: 'RESET_ELAPSED_TIME' })
-  }, [currentState])
+  }, [machineState.value])
 
   return (
     <div className=" flex items-center justify-center mt-auto mb-2">
       <AnimateSwitch
         shouldAnimateOnMount={true}
-        activeIndex={currentState === 'inBetweenSteps' ? 1 : 0}
+        activeIndex={matches('inBetweenSteps') ? 1 : 0}
         className="md:h-auto h-48"
         enterClassName={
           isGoingBackwards ? 'animate-fade-in-left' : 'animate-fade-in-right'
