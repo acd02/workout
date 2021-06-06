@@ -1,6 +1,6 @@
 import { assign, StateMachine } from '@xstate/fsm'
 
-import type { WorkoutContext, WorkoutEvent } from './types'
+import type { WorkoutContext, WorkoutEvents } from './types'
 
 const Actions = {
   incrementStep: 'incrementStep',
@@ -11,8 +11,8 @@ const Actions = {
   resetContext: 'resetContext',
 } as const
 
-const actions: StateMachine.ActionMap<WorkoutContext, WorkoutEvent> = {
-  [Actions.resetContext]: assign<WorkoutContext, WorkoutEvent>({
+const actions: StateMachine.ActionMap<WorkoutContext, WorkoutEvents> = {
+  [Actions.resetContext]: assign<WorkoutContext, WorkoutEvents>({
     step: 0,
     speed: 'normal',
   }),
@@ -30,9 +30,9 @@ const actions: StateMachine.ActionMap<WorkoutContext, WorkoutEvent> = {
     },
   }),
   [Actions.setMode]: assign({
-    mode: (context, evt) => {
+    mode: ({ mode }, evt) => {
       if (evt.type === 'START_SET') return evt.mode
-      else return context.mode
+      else return mode
     },
   }),
   [Actions.setNavigation]: assign({
@@ -43,10 +43,10 @@ const actions: StateMachine.ActionMap<WorkoutContext, WorkoutEvent> = {
     },
   }),
   [Actions.incrementStep]: assign({
-    step: context => context.step + 1,
+    step: ({ step }) => step + 1,
   }),
   [Actions.decrementStep]: assign({
-    step: context => context.step - 1,
+    step: ({ step }) => step - 1,
   }),
 }
 

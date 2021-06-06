@@ -2,57 +2,65 @@ import { createMachine } from '@xstate/fsm'
 
 import { Actions, actions } from './actions'
 import { guards } from './guards'
-import type { WorkoutContext, WorkoutEvent, WorkoutState } from './types'
+import type { WorkoutContext, WorkoutEvents, WorkoutState } from './types'
 
-const workoutMachine = createMachine<WorkoutContext, WorkoutEvent, WorkoutState>(
-  {
-    initial: 'idle',
-    context: { step: 0, singleModeTotalSteps: 8, normalModeTotalSteps: 4 },
-    states: {
-      idle: {
-        on: {
-          START_SET: {
-            actions: [Actions.setMode, Actions.setSpeed],
-            target: 'onGoingSet',
+const Targets: Record<WorkoutState['value'], string> = {
+  idle: 'idle',
+  inBetweenSteps: 'inBetweenSteps',
+  onGoingSet: 'onGoingSet',
+} as const
+
+const defaultContext = { step: 0, singleModeTotalSteps: 8, normalModeTotalSteps: 4 }
+
+const createWorkoutMachine = (initialContext?: Partial<WorkoutContext>) =>
+  createMachine<WorkoutContext, WorkoutEvents, WorkoutState>(
+    {
+      initial: Targets.idle,
+      context: { ...defaultContext, ...initialContext },
+      states: {
+        idle: {
+          on: {
+            START_SET: {
+              actions: [Actions.setMode, Actions.setSpeed],
+              target: Targets.onGoingSet,
+            },
           },
         },
-      },
-      onGoingSet: {
-        entry: [Actions.incrementStep, Actions.setSpeed, Actions.setNavigation],
-        on: {
-          NEXT: 'inBetweenSteps',
-          PREVIOUS: {
-            actions: [Actions.decrementStep],
-            target: 'inBetweenSteps',
-            cond: ({ step }) => step > 1,
+        onGoingSet: {
+          entry: [Actions.incrementStep, Actions.setSpeed, Actions.setNavigation],
+          on: {
+            NEXT: Targets.inBetweenSteps,
+            PREVIOUS: {
+              actions: [Actions.decrementStep],
+              target: Targets.inBetweenSteps,
+              cond: ({ step }) => step > 1,
+            },
           },
         },
-      },
-      inBetweenSteps: {
-        entry: [Actions.setNavigation],
-        on: {
-          PREVIOUS: {
-            actions: [Actions.decrementStep, Actions.setNavigation],
-            target: 'onGoingSet',
+        inBetweenSteps: {
+          entry: [Actions.setNavigation],
+          on: {
+            PREVIOUS: {
+              actions: [Actions.decrementStep, Actions.setNavigation],
+              target: Targets.onGoingSet,
+            },
+            NEXT: [
+              {
+                target: Targets.idle,
+                cond: guards.hasReachedLastStep,
+                actions: [Actions.resetContext],
+              },
+              {
+                target: Targets.onGoingSet,
+              },
+            ],
           },
-          NEXT: [
-            {
-              target: 'idle',
-              cond: guards.hasReachedLimit,
-              actions: [Actions.resetContext],
-            },
-            {
-              target: 'onGoingSet',
-            },
-          ],
         },
       },
     },
-  },
-  {
-    actions,
-  }
-)
+    {
+      actions,
+    }
+  )
 
-export type { WorkoutEvent, WorkoutContext }
-export { workoutMachine }
+export { createWorkoutMachine }

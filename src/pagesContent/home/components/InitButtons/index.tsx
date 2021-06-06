@@ -1,25 +1,19 @@
 import { Button } from 'components/atoms/Button'
-import type { WorkoutMachineSend } from 'machines/workout/types'
 import React from 'react'
 
 type Props = {
-  send: WorkoutMachineSend
+  startSingleSet: () => void
+  startSet: () => void
 }
 
-export function InitButtons({ send }: Props) {
+export function InitButtons({ startSet, startSingleSet }: Props) {
   return (
     <div className="animate-fade-in">
-      <Button
-        className="mb-4"
-        onClick={() => send({ type: 'START_SET', mode: 'single' })}
-      >
+      <Button className="mb-4" onClick={startSingleSet}>
         START SINGLE SIDE SET
       </Button>
       <br />
-      <Button
-        className="w-full"
-        onClick={() => send({ type: 'START_SET', mode: 'normal' })}
-      >
+      <Button className="w-full" onClick={startSet}>
         START SET
       </Button>
     </div>

@@ -28,7 +28,7 @@ export function Main({ machineState }: Props) {
   }, [machineState.value])
 
   return (
-    <div className=" flex items-center justify-center mt-auto mb-2">
+    <div className=" flex items-center justify-center py-1 my-auto">
       <AnimateSwitch
         shouldAnimateOnMount={true}
         activeIndex={matches('inBetweenSteps') ? 1 : 0}
@@ -55,5 +55,3 @@ export function Main({ machineState }: Props) {
     </div>
   )
 }
-
-export type { Props }

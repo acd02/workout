@@ -1,14 +1,12 @@
 import { Badge } from 'components/atoms/Badge'
-import type { WorkoutContext } from 'machines/workout/types'
+import type { WorkoutMachineState } from 'machines/workout/types'
 import React from 'react'
 
 type Props = {
-  context: WorkoutContext
+  machineContext: WorkoutMachineState['context']
 }
 
-export function Header({ context }: Props) {
-  const { mode, speed = 'normal' } = context
-
+export function Header({ machineContext: { mode, speed } }: Props) {
   return (
     <div className="w-full text-center">
       <div className="text-xl font-medium leading-5 text-gray-900">

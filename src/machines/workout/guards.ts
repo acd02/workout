@@ -1,6 +1,6 @@
 import { WorkoutContext } from './types'
 
-function hasReachedLimit({
+function hasReachedLastStep({
   mode,
   singleModeTotalSteps,
   normalModeTotalSteps,
@@ -12,7 +12,7 @@ function hasReachedLimit({
 }
 
 const guards = {
-  hasReachedLimit,
+  hasReachedLastStep,
 }
 
 export { guards }

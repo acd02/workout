@@ -19,7 +19,7 @@ type Speed = 'normal' | 'double time'
 type Navigation = 'forwards' | 'backwards'
 
 // The events that the machine handles
-type WorkoutEvent =
+type WorkoutEvents =
   | { type: 'START_SET'; mode: Mode }
   | { type: 'SET_SPEED'; speed: Speed }
   | { type: 'NEXT' }
@@ -35,17 +35,6 @@ type WorkoutContext = {
   navigation?: Navigation
 }
 
-type WorkoutMachineState = StateMachine.State<WorkoutContext, WorkoutEvent, WorkoutState>
-type WorkoutMachineSend = StateMachine.Service<
-  WorkoutContext,
-  WorkoutEvent,
-  WorkoutState
->['send']
+type WorkoutMachineState = StateMachine.State<WorkoutContext, WorkoutEvents, WorkoutState>
 
-export type {
-  WorkoutState,
-  WorkoutContext,
-  WorkoutEvent,
-  WorkoutMachineState,
-  WorkoutMachineSend,
-}
+export type { WorkoutState, WorkoutContext, WorkoutEvents, WorkoutMachineState }

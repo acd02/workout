@@ -1,9 +1,8 @@
-import { StateMachine } from '@xstate/fsm'
-import type { WorkoutContext, WorkoutEvent, WorkoutState } from 'machines/workout/types'
+import type { WorkoutMachineState } from 'machines/workout/types'
 import React from 'react'
 
 type Props = {
-  machineState: StateMachine.State<WorkoutContext, WorkoutEvent, WorkoutState>
+  machineState: WorkoutMachineState
 }
 
 export function Footer({ machineState: { context, matches } }: Props) {
@@ -25,7 +24,7 @@ export function Footer({ machineState: { context, matches } }: Props) {
     ) : (
       <>
         STEP: <span className="font-semibold text-orange-400">{step}</span> /{' '}
-        {mode === 'single' ? '8' : '4'}
+        {mode === 'single' ? singleModeTotalSteps : normalModeTotalSteps}
       </>
     )
 
