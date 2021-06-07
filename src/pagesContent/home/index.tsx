@@ -3,7 +3,7 @@ import cx from 'classcat'
 import { MainLayout } from 'components/layouts/Main'
 import { createWorkoutMachine } from 'machines/workout'
 import type { WorkoutContext, WorkoutEvents, WorkoutState } from 'machines/workout/types'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -11,10 +11,11 @@ import { InitButtons } from './components/InitButtons'
 import { Main } from './components/Main'
 import { NavigationButtons } from './components/NavigationButtons'
 
+const workoutMachine = createWorkoutMachine()
+
 export function RenderHome() {
-  const machine = useMemo(() => createWorkoutMachine(), [])
   const [machineState, send] = useMachine<WorkoutContext, WorkoutEvents, WorkoutState>(
-    machine
+    workoutMachine
   )
 
   const { context, matches } = machineState
@@ -58,8 +59,8 @@ export function RenderHome() {
     >
       <div
         className={cx([
-          'flex flex-col items-center justify-center px-6',
-          matches('idle') && 'row-span-3',
+          !matches('idle') && 'flex flex-col items-center justify-center px-6',
+          matches('idle') && 'row-span-3 m-auto',
         ])}
       >
         {mainContent}
