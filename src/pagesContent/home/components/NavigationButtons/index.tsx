@@ -1,7 +1,7 @@
 import cx from 'classcat'
 import { Button } from 'components/atoms/Button'
 import type { WorkoutMachineState } from 'machines/workout/types'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import styles from './styles.module.css'
 import { getNextStepLabel } from './utils'
@@ -15,6 +15,12 @@ type Props = {
 export function NavigationButtons({ goToNextStep, goToPrevStep, machineState }: Props) {
   const { context, matches } = machineState
 
+  useEffect(() => {
+    nextBtnRef.current?.focus()
+  }, [])
+
+  const nextBtnRef = useRef<HTMLButtonElement>(null)
+
   return (
     <div
       className={cx([styles.root, 'flex flex-wrap items-baseline justify-center w-full'])}
@@ -26,7 +32,9 @@ export function NavigationButtons({ goToNextStep, goToPrevStep, machineState }: 
       >
         PREVIOUS
       </Button>
-      <Button onClick={goToNextStep}>{getNextStepLabel(machineState)}</Button>
+      <Button ref={nextBtnRef} onClick={goToNextStep}>
+        {getNextStepLabel(machineState)}
+      </Button>
     </div>
   )
 }

@@ -1,18 +1,21 @@
 import cx from 'classcat'
-import React, { ComponentPropsWithoutRef } from 'react'
+import React, { ComponentPropsWithoutRef, forwardRef, Ref } from 'react'
 
 type Props = {
   outline?: boolean
   className?: string
 }
 
-export function Button({
-  disabled,
-  outline,
-  className,
-  children,
-  ...rest
-}: Props & ComponentPropsWithoutRef<'button'>) {
+function _Button(
+  {
+    disabled,
+    outline,
+    className,
+    children,
+    ...rest
+  }: Props & ComponentPropsWithoutRef<'button'>,
+  ref: Ref<HTMLButtonElement>
+) {
   const commonStyles =
     'focus:outline-none focus:ring-2 focus:ring-opacity-50 inline-flex justify-center items-center w-full px-6 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent rounded-md ring-offset-2'
 
@@ -23,6 +26,7 @@ export function Button({
 
   return (
     <button
+      ref={ref}
       {...rest}
       disabled={disabled}
       type="button"
@@ -37,3 +41,7 @@ export function Button({
     </button>
   )
 }
+
+const Button = forwardRef(_Button)
+
+export { Button }
