@@ -17,7 +17,6 @@ export function RenderHome() {
   const [machineState, send] = useMachine<WorkoutContext, WorkoutEvents, WorkoutState>(
     workoutMachine
   )
-
   const { context, matches } = machineState
   const events = {
     startSingleSet: () => send({ type: 'START_SET', mode: 'single' }),
