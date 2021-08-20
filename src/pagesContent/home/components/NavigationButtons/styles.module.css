@@ -1,8 +1,0 @@
-.root {
-  gap: theme('spacing.4');
-
-  & > * {
-    flex-basis: clamp(230px, 50%, 275px);
-    flex-grow: 0;
-  }
-}

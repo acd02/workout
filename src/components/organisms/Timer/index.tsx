@@ -3,7 +3,6 @@ import { useEffectAfterMount } from 'hooks/useEffectAfterMount'
 import React, { Dispatch, ReactElement, useEffect, useRef } from 'react'
 
 import type { Action, State } from './reducer/types'
-import styles from './styles.module.css'
 import { getOffsetValue, toIntlNumberFormat } from './utils'
 
 type Props = {
@@ -68,7 +67,10 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
 
   const backgroundCircle = (
     <circle
-      className={cx([styles.backgroundCircle, elapsedTime > limit && styles.isOverLimit])}
+      className={cx([
+        'stroke-current ',
+        elapsedTime > limit ? 'text-red-400' : 'text-gray-200',
+      ])}
       {...circleAttrs}
     />
   )
@@ -76,7 +78,9 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
   const foregroundCircle = (
     <circle
       ref={circleRef}
-      className={styles.foregroundCircle}
+      className={
+        'duration-1000 ease-linear transition-all stroke-current text-orange-500'
+      }
       strokeLinecap="round"
       {...circleAttrs}
     />
@@ -90,7 +94,7 @@ export function Timer({ limit = 60, state, dispatch }: Props): ReactElement {
       </svg>
       <span
         className={cx([
-          'flex items-center absolute top-50 left-50 transform -translate-y-1/2 -translate-x-1/2 tabular-nums text-6xl transition-colors duration-300',
+          'flex items-center absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 tabular-nums text-6xl transition-colors duration-300',
           limit < elapsedTime && 'text-red-400',
         ])}
       >

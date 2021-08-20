@@ -19,7 +19,7 @@ export function Header({ machineContext: { mode, speed } }: Props) {
             <>💪</>
           ) : (
             <>
-              💪 <span className="flip-x inline-block">💪</span>
+              💪 <span className="scale-x-[-1] inline-block">💪</span>
             </>
           )}
         </div>
