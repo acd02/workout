@@ -1,10 +1,10 @@
 import { createMachine } from '@xstate/fsm'
 
-import { Actions, actions } from './actions'
+import { ACTIONS, actions } from './actions'
 import { guards } from './guards'
 import type { WorkoutContext, WorkoutEvents, WorkoutState } from './types'
 
-const Targets: Record<WorkoutState['value'], string> = {
+const TARGETS: Record<WorkoutState['value'], string> = {
   idle: 'idle',
   inBetweenSteps: 'inBetweenSteps',
   onGoingSet: 'onGoingSet',
@@ -15,43 +15,43 @@ const defaultContext = { step: 0, singleModeTotalSteps: 8, normalModeTotalSteps:
 const createWorkoutMachine = (initialContext?: Partial<WorkoutContext>) =>
   createMachine<WorkoutContext, WorkoutEvents, WorkoutState>(
     {
-      initial: Targets.idle,
+      initial: TARGETS.idle,
       context: { ...defaultContext, ...initialContext },
       states: {
         idle: {
           on: {
             START_SET: {
-              actions: [Actions.setMode, Actions.setSpeed],
-              target: Targets.onGoingSet,
+              actions: [ACTIONS.setMode, ACTIONS.setSpeed],
+              target: TARGETS.onGoingSet,
             },
           },
         },
         onGoingSet: {
-          entry: [Actions.incrementStep, Actions.setSpeed, Actions.setNavigation],
+          entry: [ACTIONS.incrementStep, ACTIONS.setSpeed, ACTIONS.setNavigation],
           on: {
-            NEXT: Targets.inBetweenSteps,
+            NEXT: TARGETS.inBetweenSteps,
             PREVIOUS: {
-              actions: [Actions.decrementStep],
-              target: Targets.inBetweenSteps,
+              actions: [ACTIONS.decrementStep],
+              target: TARGETS.inBetweenSteps,
               cond: ({ step }) => step > 1,
             },
           },
         },
         inBetweenSteps: {
-          entry: [Actions.setNavigation],
+          entry: [ACTIONS.setNavigation],
           on: {
             PREVIOUS: {
-              actions: [Actions.decrementStep, Actions.setNavigation],
-              target: Targets.onGoingSet,
+              actions: [ACTIONS.decrementStep, ACTIONS.setNavigation],
+              target: TARGETS.onGoingSet,
             },
             NEXT: [
               {
-                target: Targets.idle,
+                target: TARGETS.idle,
                 cond: guards.hasReachedLastStep,
-                actions: [Actions.resetContext],
+                actions: [ACTIONS.resetContext],
               },
               {
-                target: Targets.onGoingSet,
+                target: TARGETS.onGoingSet,
               },
             ],
           },
